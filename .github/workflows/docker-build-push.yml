@@ -20,8 +20,8 @@ jobs:
           node-version: "16"
       - run: yarn install --frozen-lockfile
       - run: yarn prisma:generate
-      - run: yarn test
       - run: yarn build
+      - run: yarn test
 
   # release:
   #   needs: check
