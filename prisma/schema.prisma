@@ -6,16 +6,53 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 generator tsed {
   provider = "tsed-prisma"
+  output   = "../src/generated/prisma"
 }
 
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
+  id      String   @id @default(uuid())
+  email   String   @unique
+  name    String?
+  lookups Lookup[]
+}
+
+model Lookup {
+  id        String  @id @default(uuid())
+  name      String
+  kind      String  @default("NONE")
+  enabled   Boolean @default(false)
+  frequency Int     @default(60) // number of minutes
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  htmlLookup HtmlLookup?
+}
+
+model HtmlLookup {
+  id     String
+  lookup Lookup @relation(fields: [id], references: [id])
+
+  url          String
+  selector     String
+  selectorType String @default("CSS")
+
+  singlePageLookup SinglePageLookup?
+
+  @@id([id])
+}
+
+model SinglePageLookup {
+  id     String
+  lookup HtmlLookup @relation(fields: [id], references: [id])
+
+  expression String
+
+  @@id([id])
 }
