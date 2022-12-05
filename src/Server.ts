@@ -1,19 +1,19 @@
-import { join } from "path";
-import { Configuration, Inject } from "@tsed/di";
-import { PlatformApplication } from "@tsed/common";
-import "@tsed/platform-express"; // /!\ keep this import
 import "@tsed/ajv";
+import { PlatformApplication } from "@tsed/common";
+import { Configuration, Inject } from "@tsed/di";
+import "@tsed/platform-express"; // /!\ keep this import
+import { join } from "path";
 import { config } from "./config/index";
-import * as rest from "./controllers/rest/index";
+import * as controllers from "./controllers";
 
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
-  httpPort: process.env.PORT || 8083,
+  httpPort: process.env.PORT || 8080,
   httpsPort: false, // CHANGE
   componentsScan: false,
   mount: {
-    "/rest": [...Object.values(rest)]
+    "/": [...Object.values(controllers)]
   },
   middlewares: [
     "cors",
