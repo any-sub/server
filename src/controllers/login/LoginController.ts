@@ -7,6 +7,6 @@ export class LoginController {
   @Get()
   @View("login/Login")
   public loginPage() {
-    return {};
+    return;
   }
 }
