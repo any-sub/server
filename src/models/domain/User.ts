@@ -1,7 +1,7 @@
 export class User {
   id: number;
   email: string;
-  roles: string[];
+  roles: string[] = [];
 
   public get isAdmin(): boolean {
     return this.roles.includes("ADMIN");
