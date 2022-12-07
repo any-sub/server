@@ -6,9 +6,11 @@ on:
     types: [opened, reopened]
     branches:
       - main
+      - develop
   push:
     branches:
       - main
+      - develop
 
 jobs:
   check:

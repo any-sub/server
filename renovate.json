@@ -10,5 +10,6 @@
       "groupName": "Ts.ED",
       "matchPackagePrefixes": ["@tsed/"]
     }
-  ]
+  ],
+  "baseBranches": ["develop"]
 }
