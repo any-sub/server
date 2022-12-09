@@ -1,7 +1,7 @@
 import { PlatformTest } from "@tsed/common";
 import SuperTest from "supertest";
-import { LoginController } from "../../../controllers/login/LoginController";
-import { Server } from "../../../Server";
+import { LoginController } from "./LoginController";
+import { Server } from "../../Server";
 
 describe("LoginController", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;

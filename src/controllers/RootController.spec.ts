@@ -1,7 +1,7 @@
 import { expect, jest } from "@jest/globals";
 import { PlatformTest, Res } from "@tsed/common";
-import { RootController } from "../../controllers/RootController";
-import { User } from "../../models";
+import { RootController } from "./RootController";
+import { User } from "../models";
 
 describe("RootController", () => {
   beforeEach(PlatformTest.create);
