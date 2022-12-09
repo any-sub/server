@@ -1,5 +1,5 @@
-import { expect, jest } from "@jest/globals";
-import { User } from "../../../models";
+import { expect } from "@jest/globals";
+import { User } from "..";
 
 describe("User", () => {
   const user = new User();

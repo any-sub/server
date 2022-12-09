@@ -1,5 +1,5 @@
 import { PlatformTest } from "@tsed/common";
-import { LoginController } from "../../../controllers";
+import { LoginController } from "..";
 
 describe("LoginController", () => {
   beforeEach(PlatformTest.create);
@@ -7,7 +7,6 @@ describe("LoginController", () => {
 
   it("should do something", () => {
     const instance = PlatformTest.get<LoginController>(LoginController);
-    // const instance = PlatformTest.invoke<LoginController>(LoginController); // get fresh instance
 
     expect(instance).toBeInstanceOf(LoginController);
   });

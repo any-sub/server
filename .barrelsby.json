@@ -1,5 +1,13 @@
 {
-  "directory": ["./src/controllers", "./src/middleware", "./src/models"],
-  "exclude": ["__mock__", "__mocks__", ".spec.ts"],
+  "directory": [
+    "./src/controllers",
+    "./src/middleware",
+    "./src/models",
+    "./src/workers/lookups",
+    "./src/workers/producers"
+  ],
+  "exclude": [
+    "__mock__", "__mocks__", ".spec.ts"
+  ],
   "delete": true
 }
