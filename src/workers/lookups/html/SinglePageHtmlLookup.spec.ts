@@ -24,7 +24,7 @@ describe("SinglePageHtmlLookup", () => {
 
   it("should create an instance", async () => {
     // When
-    const instance = await PlatformTest.invoke(SinglePageHtmlLookup);
+    const instance = await PlatformTest.invoke<SinglePageHtmlLookup>(SinglePageHtmlLookup);
 
     // Then
     expect(instance).toBeInstanceOf(SinglePageHtmlLookup);
@@ -33,7 +33,7 @@ describe("SinglePageHtmlLookup", () => {
   it("should throw if content cannot be found", async () => {
     // Given
     const deps = mockedDependencies(`<p></p>`);
-    const instance = await PlatformTest.invoke(SinglePageHtmlLookup, deps);
+    const instance = await PlatformTest.invoke<SinglePageHtmlLookup>(SinglePageHtmlLookup, deps);
 
     // When - Then
     const expectRejected = expect(() => instance.contentOf("some url", "body>p#myParagraph")).rejects;
@@ -48,7 +48,7 @@ describe("SinglePageHtmlLookup", () => {
     // Given
     const actualContent = chance.string({ symbols: false });
     const deps = mockedDependencies(`<body><p id="myParagraph">${actualContent}</p></body>`);
-    const instance = await PlatformTest.invoke(SinglePageHtmlLookup, deps);
+    const instance = await PlatformTest.invoke<SinglePageHtmlLookup>(SinglePageHtmlLookup, deps);
 
     // When
     const content = await instance.contentOf("some url", "body>p#myParagraph");
@@ -61,7 +61,7 @@ describe("SinglePageHtmlLookup", () => {
     // Given
     const actualContent = chance.string({ symbols: false });
     const deps = mockedDependencies(`<body><p id="myParagraph">${actualContent}</p></body>`);
-    const instance = await PlatformTest.invoke(SinglePageHtmlLookup, deps);
+    const instance = await PlatformTest.invoke<SinglePageHtmlLookup>(SinglePageHtmlLookup, deps);
 
     // When
     const content = await instance.contentOf("some url", "#myParagraph");

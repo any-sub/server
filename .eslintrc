@@ -10,7 +10,7 @@
     "node": true,
     "es6": true
   },
-  "ignorePatterns": ["src/generated/", "src/__test__/"],
+  "ignorePatterns": ["src/generated/", "src/**/*.spec.ts", "src/**/*.spec.integration.ts"],
   "root": true,
   "overrides": [
     {
