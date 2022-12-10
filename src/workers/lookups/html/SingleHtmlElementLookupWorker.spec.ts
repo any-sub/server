@@ -3,7 +3,7 @@ import { PlatformTest } from "@tsed/common";
 import { Chance } from "chance";
 import { NoContentFromLookup } from "../../../Errors";
 import { HtmlWebProducer } from "../../producers";
-import { SinglePageHtmlLookup } from "./SinglePageHtmlLookup";
+import { SingleHtmlElementLookupWorker } from "./SingleHtmlElementLookupWorker";
 
 const chance = new Chance();
 
@@ -18,22 +18,22 @@ const mockedDependencies = (webProducerContent: string) => [
   }
 ];
 
-describe("SinglePageHtmlLookup", () => {
+describe("SingleHtmlElementLookupWorker", () => {
   beforeEach(PlatformTest.create);
   afterEach(PlatformTest.reset);
 
   it("should create an instance", async () => {
     // When
-    const instance = await PlatformTest.invoke<SinglePageHtmlLookup>(SinglePageHtmlLookup);
+    const instance = await PlatformTest.invoke<SingleHtmlElementLookupWorker>(SingleHtmlElementLookupWorker);
 
     // Then
-    expect(instance).toBeInstanceOf(SinglePageHtmlLookup);
+    expect(instance).toBeInstanceOf(SingleHtmlElementLookupWorker);
   });
 
   it("should throw if content cannot be found", async () => {
     // Given
     const deps = mockedDependencies(`<p></p>`);
-    const instance = await PlatformTest.invoke<SinglePageHtmlLookup>(SinglePageHtmlLookup, deps);
+    const instance = await PlatformTest.invoke<SingleHtmlElementLookupWorker>(SingleHtmlElementLookupWorker, deps);
 
     // When - Then
     const expectRejected = expect(() => instance.contentOf("some url", "body>p#myParagraph")).rejects;
@@ -48,7 +48,7 @@ describe("SinglePageHtmlLookup", () => {
     // Given
     const actualContent = chance.string({ symbols: false });
     const deps = mockedDependencies(`<body><p id="myParagraph">${actualContent}</p></body>`);
-    const instance = await PlatformTest.invoke<SinglePageHtmlLookup>(SinglePageHtmlLookup, deps);
+    const instance = await PlatformTest.invoke<SingleHtmlElementLookupWorker>(SingleHtmlElementLookupWorker, deps);
 
     // When
     const content = await instance.contentOf("some url", "body>p#myParagraph");
@@ -61,7 +61,7 @@ describe("SinglePageHtmlLookup", () => {
     // Given
     const actualContent = chance.string({ symbols: false });
     const deps = mockedDependencies(`<body><p id="myParagraph">${actualContent}</p></body>`);
-    const instance = await PlatformTest.invoke<SinglePageHtmlLookup>(SinglePageHtmlLookup, deps);
+    const instance = await PlatformTest.invoke<SingleHtmlElementLookupWorker>(SingleHtmlElementLookupWorker, deps);
 
     // When
     const content = await instance.contentOf("some url", "#myParagraph");

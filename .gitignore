@@ -55,5 +55,9 @@ test/**/*.js.map
 .env.local
 .env.development
 
+# Barrels
 src/**/index.ts
 !src/index.ts
+
+# Prisma model
+src/generated

@@ -1,9 +1,10 @@
-import { Inject } from "@tsed/di";
+import { Inject, Injectable } from "@tsed/di";
 import { NoContentFromLookup } from "../../../Errors";
 import { HtmlWebProducer } from "../../producers/HtmlWebProducer";
-import { HtmlLookup } from "./HtmlLookup";
+import { HtmlLookup } from "./HtmlLookupWorker";
 
-export class SinglePageHtmlLookup extends HtmlLookup {
+@Injectable()
+export class SingleHtmlElementLookupWorker extends HtmlLookup {
   @Inject() private webProducer: HtmlWebProducer;
 
   public async contentOf(url: string, lookup: string): Promise<string> {
