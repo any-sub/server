@@ -3,8 +3,18 @@ import { PlatformTest } from "@tsed/common";
 import { HtmlConsumer } from "./HtmlConsumer";
 import { Chance } from "chance";
 import { ConsumerOptions, LookupMode } from "./Consumer";
+import { HtmlElementPropertyReader } from "./HtmlElementPropertyReader";
 
 const chance = new Chance();
+
+const mockedDependencies = (properties = {}) => [
+  {
+    token: HtmlElementPropertyReader,
+    use: {
+      read: (element: Element) => properties
+    }
+  }
+];
 
 describe("HTMLConsumer", () => {
   beforeEach(PlatformTest.create);
@@ -163,5 +173,23 @@ describe("HTMLConsumer", () => {
 
     // Then
     expect(result).toEqual({ data: ["Current numbers: 24", "Current numbers: 15"] });
+  });
+
+  it("should get content from the container's children and apply template with element properties", async () => {
+    // Given
+    const consumerOptions = options("div#container", "a");
+    consumerOptions.reporting = {
+      search: /(?<number>\d+)/i,
+      messageTemplate: "Current numbers: {{number}} {{link}}"
+    };
+    const url = consumerOptions.originURL.origin;
+    const deps = mockedDependencies({ link: `${url}/foo` });
+    const instance = await PlatformTest.invoke<HtmlConsumer>(HtmlConsumer, deps);
+
+    // When
+    const result = instance.consume(`<div id="container">We have 32.<a href="/foo">We also have 24.</a></div>`, consumerOptions);
+
+    // Then
+    expect(result).toEqual({ data: [`Current numbers: 24 ${url}/foo`] });
   });
 });

@@ -1,12 +1,15 @@
 import { Consumer, ConsumerOptions, ElementLookupOptions, LookupMode } from "./Consumer";
 import { HtmlSource } from "../readers/HttpReader";
 import { State } from "../state/State";
-import { Injectable } from "@tsed/di";
+import { Inject, Injectable } from "@tsed/di";
 import { JSDOM } from "jsdom";
 import Handlebars from "handlebars";
+import { HtmlElementPropertyReader } from "./HtmlElementPropertyReader";
 
 @Injectable()
 export class HtmlConsumer extends Consumer<HtmlSource> {
+  @Inject() propertyReader: HtmlElementPropertyReader;
+
   public consume(source: HtmlSource, options: ConsumerOptions): State {
     const dom = this.convert(source, options);
     const container = this.getContainer(dom, options.lookup.container);
@@ -15,39 +18,49 @@ export class HtmlConsumer extends Consumer<HtmlSource> {
       throw new Error("Container not found.");
     }
 
-    const content = this.getContentArray(options, container);
-    return { data: this.buildReporting(options, content) };
+    const elements = this.getContentArray(options, container);
+    return { data: this.buildReporting(options, elements) };
   }
 
-  private buildReporting(options: ConsumerOptions, content: string[]) {
+  private buildReporting(options: ConsumerOptions, elements: Element[]): string[] {
     if (options.reporting) {
       const { search, messageTemplate } = options.reporting;
 
       if (!messageTemplate) {
-        return content.filter((t) => search.test(t));
+        return elements.map((el) => el.textContent).filter((t) => t && search.test(t)) as string[];
       }
 
       const template = Handlebars.compile(messageTemplate);
-      return content
-        .map((text) => text.match(search)?.groups)
-        .filter(Boolean)
-        .map((groups) => template(groups));
+      return this.buildReportingWithTemplate(elements, search, template);
+    }
+
+    return elements.map((el) => el.textContent).filter(Boolean) as string[];
+  }
+
+  private buildReportingWithTemplate(elements: Element[], search: RegExp, template: Handlebars.TemplateDelegate) {
+    const content: string[] = [];
+
+    for (const element of elements) {
+      const groups = element.textContent?.match(search)?.groups;
+      if (groups) {
+        content.push(template({ ...this.propertyReader.read(element), ...groups }));
+      }
     }
 
     return content;
   }
 
-  private getContentArray(options: ConsumerOptions, container: Element): string[] {
-    const content: (string | null)[] = [];
+  private getContentArray(options: ConsumerOptions, container: Element): Element[] {
+    const content: Element[] = [];
     if (options.lookup.children) {
       const children = this.getChildren(container, options.lookup.children);
       for (const child of children) {
-        content.push(child.textContent);
+        content.push(child);
       }
     } else {
-      content.push(container.textContent);
+      content.push(container);
     }
-    return content.filter(Boolean) as string[];
+    return content;
   }
 
   private convert(source: HtmlSource, options: ConsumerOptions): JSDOM {
