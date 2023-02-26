@@ -8,7 +8,7 @@ export abstract class Consumer<T extends HttpSource> {
 export type ConsumerOptions = {
   originURL: URL;
   lookup: LookupOptions;
-  reporting: ReportingOptions;
+  reporting?: ReportingOptions;
 };
 
 export type LookupOptions = {
@@ -33,5 +33,5 @@ export enum LookupMode {
 
 export type ReportingOptions = {
   search: RegExp;
-  messageTemplate: string;
+  messageTemplate?: string;
 };

@@ -1,12 +1,13 @@
 import { Consumer, ConsumerOptions, ElementLookupOptions, LookupMode } from "./Consumer";
-import { HTMLSource } from "../readers/HttpReader";
+import { HtmlSource } from "../readers/HttpReader";
 import { State } from "../state/State";
 import { Injectable } from "@tsed/di";
 import { JSDOM } from "jsdom";
+import Handlebars from "handlebars";
 
 @Injectable()
-export class HTMLConsumer extends Consumer<HTMLSource> {
-  public consume(source: HTMLSource, options: ConsumerOptions): State {
+export class HtmlConsumer extends Consumer<HtmlSource> {
+  public consume(source: HtmlSource, options: ConsumerOptions): State {
     const dom = this.convert(source, options);
     const container = this.getContainer(dom, options.lookup.container);
 
@@ -15,20 +16,31 @@ export class HTMLConsumer extends Consumer<HTMLSource> {
     }
 
     const content = this.getContentArray(options, container);
+    return { data: this.buildReporting(options, content) };
+  }
 
-    const { search, messageTemplate } = options.reporting;
-    const reported = content.map((text) => {
-      const groups = text.match(search)?.groups ?? {};
-      return messageTemplate; // TODO template
-    });
+  private buildReporting(options: ConsumerOptions, content: string[]) {
+    if (options.reporting) {
+      const { search, messageTemplate } = options.reporting;
 
-    return { data: reported };
+      if (!messageTemplate) {
+        return content.filter((t) => search.test(t));
+      }
+
+      const template = Handlebars.compile(messageTemplate);
+      return content
+        .map((text) => text.match(search)?.groups)
+        .filter(Boolean)
+        .map((groups) => template(groups));
+    }
+
+    return content;
   }
 
   private getContentArray(options: ConsumerOptions, container: Element): string[] {
     const content: (string | null)[] = [];
     if (options.lookup.children) {
-      const children = this.lookup(container, options.lookup.children, true);
+      const children = this.getChildren(container, options.lookup.children);
       for (const child of children) {
         content.push(child.textContent);
       }
@@ -38,7 +50,7 @@ export class HTMLConsumer extends Consumer<HTMLSource> {
     return content.filter(Boolean) as string[];
   }
 
-  private convert(source: HTMLSource, options: ConsumerOptions): JSDOM {
+  private convert(source: HtmlSource, options: ConsumerOptions): JSDOM {
     return new JSDOM(source, {
       url: options.originURL?.toString()
     });
@@ -58,8 +70,13 @@ export class HTMLConsumer extends Consumer<HTMLSource> {
     element: Element | Document,
     { mode, value }: ElementLookupOptions,
     multiple: boolean = false
-  ): Element | NodeListOf<Element> | null {
+  ): Element | NodeList | null {
+    if (multiple && mode === LookupMode.ALL) {
+      return element.childNodes;
+    }
+
     if (mode !== LookupMode.CSS) {
+      // TODO
       throw new Error("CSS");
     }
 

@@ -29,7 +29,7 @@ export abstract class HttpReader<T extends HttpSource> {
   }
 }
 
-export type HttpSource = XMLSource | HTMLSource | JSONSource;
-export type XMLSource = string;
-export type HTMLSource = string;
-export type JSONSource = string;
+export type HttpSource = XmlSource | HtmlSource | JsonSource;
+export type XmlSource = string;
+export type HtmlSource = string;
+export type JsonSource = string;
