@@ -1,0 +1,55 @@
+@startuml
+
+actor Admin
+actor User
+control Schedule
+participant Dispatcher
+queue Workers as "Worker Queue"
+participant Reader #Ivory
+collections Source #Aquamarine
+participant Consumer #LightSkyBlue
+participant Notifier #GreenYellow
+queue NotiQueue as "Notification Queue"
+
+note over Reader #Ivory : plain HTML, JSON, XML, single page apps
+note over Notifier #GreenYellow : In-Website, Webhooks, Email
+note over Source #Aquamarine : HTTP
+note over Consumer #LightSkyBlue
+Extract data from contents
+//tightly coupled with readers' output type//
+end note
+
+== Configuration ==
+Admin --> Consumer : Set up lookups
+
+== Setup ==
+User --> Consumer : Use existing, Set up parameters
+User --> Notifier : Set up notification providers
+
+== Flow ==
+Schedule --> Dispatcher : Initialise process
+activate Dispatcher
+
+Dispatcher -> Workers : Initialise worker
+activate Workers
+
+Workers -> Reader : Initialise lookup process
+activate Reader
+Reader -> Source : Fetch
+Source --> Workers : <<Raw Contents>>
+deactivate Reader
+
+Workers -> Consumer : <<Raw Contents, Existing State>>
+activate Consumer
+
+Consumer --> Workers : <<Updated State>>
+deactivate Consumer
+
+Workers -> Notifier : <<Notification content>>
+activate Notifier
+Notifier -> NotiQueue : <<Notifications>>
+activate NotiQueue
+
+NotiQueue --> User : Send notifications
+
+@enduml
