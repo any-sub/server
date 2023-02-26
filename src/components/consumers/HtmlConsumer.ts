@@ -1,5 +1,5 @@
 import { Consumer, ConsumerOptions, ElementLookupOptions, LookupMode } from "./Consumer";
-import { HtmlSource } from "../readers/HttpReader";
+import { HtmlSource } from "../readers";
 import { State } from "../state/State";
 import { Inject, Injectable } from "@tsed/di";
 import { JSDOM } from "jsdom";

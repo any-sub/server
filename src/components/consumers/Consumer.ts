@@ -1,4 +1,4 @@
-import { HttpSource } from "../readers/HttpReader";
+import { HttpSource } from "../readers";
 import { State } from "../state/State";
 
 export abstract class Consumer<T extends HttpSource> {

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from "@tsed/di";
-import { HttpFetch } from "../base/HttpFetch";
+import { HttpFetch } from "../base";
 import { HttpReader, JsonSource } from "./HttpReader";
 
 @Injectable()

@@ -3,11 +3,15 @@
     "./src/controllers",
     "./src/middleware",
     "./src/models",
-    "./src/workers/lookups",
-    "./src/workers/producers"
+    "./src/components/base",
+    "./src/components/consumers",
+    "./src/components/readers"
   ],
   "exclude": [
-    "__mock__", "__mocks__", ".spec.ts"
+    "__mock__",
+    "__mocks__",
+    "__test__",
+    ".spec.ts"
   ],
   "delete": true
 }

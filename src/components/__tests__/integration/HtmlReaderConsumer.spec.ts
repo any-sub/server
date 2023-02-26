@@ -1,8 +1,7 @@
 import { PlatformTest } from "@tsed/common";
-import { HttpFetch } from "../../base/HttpFetch";
-import { HtmlReader } from "../../readers/HtmlReader";
-import { HtmlConsumer } from "../../consumers/HtmlConsumer";
-import { LookupMode } from "../../consumers/Consumer";
+import { HttpFetch } from "../../base";
+import { HtmlReader } from "../../readers";
+import { HtmlConsumer, LookupMode } from "../../consumers";
 import { expect } from "@jest/globals";
 
 const mockedDependencies = (content = "", code = 200, header: string = "text/html") => [

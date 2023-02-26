@@ -1,5 +1,5 @@
 import { Response } from "node-fetch";
-import { HttpFetch } from "../base/HttpFetch";
+import { HttpFetch } from "../base";
 
 export abstract class HttpReader<T extends HttpSource> {
   public abstract read(url: string | URL): Promise<T>;
