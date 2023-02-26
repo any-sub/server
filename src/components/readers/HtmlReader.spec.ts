@@ -1,7 +1,7 @@
 import { expect } from "@jest/globals";
 import { PlatformTest } from "@tsed/common";
 import { HtmlReader } from "./HtmlReader";
-import { HttpFetch } from "../base/HttpFetch";
+import { HttpFetch } from "../base";
 
 const mockedDependencies = (content = "", code = 200, header: string = "text/html") => [
   {

@@ -39,11 +39,13 @@ Reader -> Source : Fetch
 Source --> Workers : <<Raw Contents>>
 deactivate Reader
 
-Workers -> Consumer : <<Raw Contents, Existing State>>
+Workers -> Consumer : <<Raw Contents, Options>>
 activate Consumer
 
 Consumer --> Workers : <<Updated State>>
 deactivate Consumer
+
+Workers -> Workers : Compare States
 
 Workers -> Notifier : <<Notification content>>
 activate Notifier

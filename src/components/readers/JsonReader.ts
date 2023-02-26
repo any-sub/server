@@ -1,9 +1,9 @@
 import { Inject, Injectable } from "@tsed/di";
-import { HttpFetch } from "../base/HttpFetch";
-import { HttpReader, JSONSource } from "./HttpReader";
+import { HttpFetch } from "../base";
+import { HttpReader, JsonSource } from "./HttpReader";
 
 @Injectable()
-export class JsonReader extends HttpReader<JSONSource> {
+export class JsonReader extends HttpReader<JsonSource> {
   @Inject() httpFetch: HttpFetch;
 
   protected getAcceptedContentType(): string {
