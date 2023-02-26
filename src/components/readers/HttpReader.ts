@@ -1,7 +1,7 @@
 import { Response } from "node-fetch";
 import { HttpFetch } from "../base/HttpFetch";
 
-export abstract class HttpReader<T = HTMLSource | XMLSource | JSONSource> {
+export abstract class HttpReader<T extends HttpSource> {
   public abstract read(url: string | URL): Promise<T>;
 
   protected abstract getAcceptedContentType(): string;
@@ -29,6 +29,7 @@ export abstract class HttpReader<T = HTMLSource | XMLSource | JSONSource> {
   }
 }
 
+export type HttpSource = XMLSource | HTMLSource | JSONSource;
 export type XMLSource = string;
 export type HTMLSource = string;
 export type JSONSource = string;
