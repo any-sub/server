@@ -1,13 +1,13 @@
 import { Inject, Injectable } from "@tsed/di";
 import { HttpFetch } from "../base/HttpFetch";
-import { HTMLSource, HttpReader } from "./HttpReader";
+import { HttpReader, JSONSource } from "./HttpReader";
 
 @Injectable()
-export class HtmlReader extends HttpReader<HTMLSource> {
+export class JsonReader extends HttpReader<JSONSource> {
   @Inject() httpFetch: HttpFetch;
 
   protected getAcceptedContentType(): string {
-    return "text/html";
+    return "application/json";
   }
 
   public async read(rawURL: string) {

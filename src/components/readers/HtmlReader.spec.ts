@@ -3,7 +3,7 @@ import { PlatformTest } from "@tsed/common";
 import { HtmlReader } from "./HtmlReader";
 import { HttpFetch } from "../base/HttpFetch";
 
-const mockedDependencies = (content = "", code = 200) => [
+const mockedDependencies = (content = "", code = 200, header: string = "text/html") => [
   {
     token: HttpFetch,
     use: {
@@ -11,6 +11,9 @@ const mockedDependencies = (content = "", code = 200) => [
         return new Promise((resolve) => {
           resolve({
             ok: code < 400,
+            headers: {
+              get: () => header
+            },
             text: () => new Promise((resolve) => resolve(content))
           });
         });
@@ -69,5 +72,27 @@ describe("HtmlReader", () => {
 
     // When - Then
     await expect(instance.read("https://local.host")).rejects.toThrow(new Error(expectedHtml));
+  });
+
+  it("should throw if returned content type is not html", async () => {
+    // Given
+    const deps = mockedDependencies("", 200, "application/pdf");
+    const instance = await PlatformTest.invoke<HtmlReader>(HtmlReader, deps);
+
+    // When - Then
+    await expect(instance.read("https://local.host")).rejects.toThrow();
+  });
+
+  it("should return the HTML contents when the returned content type is suffixed", async () => {
+    // Given
+    const expectedHtml = `<html lang="en"><body><h1>Hello World!</h1></body></html>`;
+    const deps = mockedDependencies(expectedHtml, 301, "text/html+someSuffix");
+    const instance = await PlatformTest.invoke<HtmlReader>(HtmlReader, deps);
+
+    // When
+    const html = await instance.read("https://local.host");
+
+    // Then
+    expect(html).toEqual(expectedHtml);
   });
 });
