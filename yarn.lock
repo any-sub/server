@@ -906,32 +906,32 @@
     ajv-formats "2.1.1"
     tslib "2.4.0"
 
-"@tsed/cli-plugin-eslint@4.4.4":
-  version "4.4.4"
-  resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-eslint/-/cli-plugin-eslint-4.4.4.tgz#16e4ad3d5d7127c84107dc67a47845bff144d25f"
-  integrity sha512-P62fv7wDqlYOSIK+/pbsAEUxHcnH1jCDelSO3fMK037QXxZ/ONsg8PjJefIvXKFoSNxdA/g1tcOdM6XiSzrw2A==
+"@tsed/cli-plugin-eslint@4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-eslint/-/cli-plugin-eslint-4.4.5.tgz#af7edd9202838c00b4925551555c804e9cc66d51"
+  integrity sha512-7WWYvLC/mBGWwtzjAuw/lti4O6IIYpkQFftbfD6N8ecD97VrsckCyV+QdQlbImH/LZaEDdXQgX6VMl0IoNrW5w==
   dependencies:
     tslib "2.3.1"
 
-"@tsed/cli-plugin-jest@4.4.4":
-  version "4.4.4"
-  resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-jest/-/cli-plugin-jest-4.4.4.tgz#42ac3cd3bd3702703d1ab4030b3476ebf4a80e99"
-  integrity sha512-xeJuM3XmmixoXhUS06+S5uxyg96Uqr/1vo6YVE3c8gJhPwnONO5NjVFYvRR5i6Zs0MzvTonXEondSL9XkBtYHQ==
+"@tsed/cli-plugin-jest@4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-jest/-/cli-plugin-jest-4.4.5.tgz#56b6c40807b8cd33d74c6ece1e97024a5da453c8"
+  integrity sha512-k4amrkM3mwTb5mn6jmAE/SOXubzNKRolRhaVArvpHPGseGjWATEoHRhfPOyrS7tvXfe8BXUWOT6wkwiPoQ0GBg==
   dependencies:
     tslib "2.3.1"
 
-"@tsed/cli-plugin-passport@4.4.4":
-  version "4.4.4"
-  resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-passport/-/cli-plugin-passport-4.4.4.tgz#0c90ba604321e3c282b7365e192949b629f5cb8a"
-  integrity sha512-h2EKs4RB/s+B5bP77+LNpuKy3ojlAmp2miOuhe64HH9wrI+a5PuGQZ0ezRc6EeDKvEWTvjkMaD9c5isMuSbQmA==
+"@tsed/cli-plugin-passport@4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-passport/-/cli-plugin-passport-4.4.5.tgz#d59cf23b8ff9109bb18f39986c692d68ca98f688"
+  integrity sha512-UtXcJGuyd0QiVE+MbSmJa5jz5VZ+z6NS+gNIL7kEb+jL2GMWOSnqBgd0I1ls1983G/4gwEkenIJtOTAzxa4JvQ==
   dependencies:
     change-case "^4.1.2"
     tslib "2.3.1"
 
-"@tsed/cli-plugin-prisma@4.4.4":
-  version "4.4.4"
-  resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-prisma/-/cli-plugin-prisma-4.4.4.tgz#83f8b92e4a0d16b326ec7000c735463982010993"
-  integrity sha512-WC7pegtbXIV3WTU3Y5LGNOVKn1+TKgYD5+Fadvnh2hWeECa1cRdFWNRJ22n61WN7oNhzIJIGMmLASRi0QPU/RA==
+"@tsed/cli-plugin-prisma@4.4.5":
+  version "4.4.5"
+  resolved "https://registry.yarnpkg.com/@tsed/cli-plugin-prisma/-/cli-plugin-prisma-4.4.5.tgz#9846fca9b16356fa1ea9826459fa36f4fc071ad3"
+  integrity sha512-SGLTCx6ytsTkbs6qoA5Bwm7qw26hvK8HcsV6T2SADV/zxestEzE/H871+QKOsr9N9YcOPbfp6hCMZXVQZcq/oQ==
   dependencies:
     change-case "4.1.2"
     tslib "2.3.1"
