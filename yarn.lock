@@ -1009,12 +1009,12 @@
   dependencies:
     tslib "2.5.0"
 
-"@tsed/logger-file@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.yarnpkg.com/@tsed/logger-file/-/logger-file-6.3.4.tgz#57118f8c7c997c2eb3de1f6745f4cc903fb86ada"
-  integrity sha512-fb7VKLr6BsIp3BrXUIy22jbXUi9Xtq1bhzr+lxMI03uI6zE4lBU6rnkHwknvOcM5XquzzJzrPoqcvAYLCFdIBg==
+"@tsed/logger-file@6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@tsed/logger-file/-/logger-file-6.5.0.tgz#646fb3417fd921a38000fb3cb863abbace512f7e"
+  integrity sha512-/mYKR0PZbRtj7oXR7VqB2Z3/QWinfU2j0nDyEgj85BpfPARKd52kKvwuMlnEWIrZ8K1Z4p84cohqy7bTEJn2yA==
   dependencies:
-    streamroller "^3.1.3"
+    streamroller "^3.1.5"
     tslib "2.3.1"
 
 "@tsed/logger-file@>=6.2.2":
@@ -1025,10 +1025,10 @@
     streamroller "^3.1.3"
     tslib "2.3.1"
 
-"@tsed/logger@6.3.4":
-  version "6.3.4"
-  resolved "https://registry.yarnpkg.com/@tsed/logger/-/logger-6.3.4.tgz#760ae5b32da779f9e008987260bbef7113f120d1"
-  integrity sha512-oC/yARWdLIHSpXQYDUy8fIqP4rRnal6PqeysAJAfr4wSvLtClbAPawvwFzKIG3U2dvhBQHpOY1zFXLQd2lY4fA==
+"@tsed/logger@6.5.0":
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/@tsed/logger/-/logger-6.5.0.tgz#84f45886fc6abe391a723a21cd69184c1ecb7010"
+  integrity sha512-lAr02hOt42FLPE0qKSAkYRyrZhk8W8keY/0swHmXM60dtFAIw3PtIEKc47NW16KsVRtMc/lIQm7u0fqQBrAaLA==
   dependencies:
     colors "1.4.0"
     date-format "^4.0.6"
@@ -5601,6 +5601,15 @@ streamroller@^3.1.3:
   version "3.1.3"
   resolved "https://registry.npmjs.org/streamroller/-/streamroller-3.1.3.tgz"
   integrity sha512-CphIJyFx2SALGHeINanjFRKQ4l7x2c+rXYJ4BMq0gd+ZK0gi4VT8b+eHe2wi58x4UayBAKx4xtHpXT/ea1cz8w==
+  dependencies:
+    date-format "^4.0.14"
+    debug "^4.3.4"
+    fs-extra "^8.1.0"
+
+streamroller@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/streamroller/-/streamroller-3.1.5.tgz#1263182329a45def1ffaef58d31b15d13d2ee7ff"
+  integrity sha512-KFxaM7XT+irxvdqSP1LGLgNWbYN7ay5owZ3r/8t77p+EtSUAfUgtl7be3xtqtOmGUl9K9YPO2ca8133RlTjvKw==
   dependencies:
     date-format "^4.0.14"
     debug "^4.3.4"
