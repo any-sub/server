@@ -58,6 +58,8 @@ test/**/*.js.map
 # Barrels
 src/**/index.ts
 !src/index.ts
+worker/src/**/index.ts
+!worker/src/index.ts
 
 # Prisma model
 src/generated
