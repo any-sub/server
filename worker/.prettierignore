@@ -3,4 +3,3 @@ docs
 node_modules
 *-lock.json
 *.lock
-worker
