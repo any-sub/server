@@ -2434,17 +2434,17 @@ acorn@^8.4.1, acorn@^8.8.0:
   resolved "https://registry.npmjs.org/acorn/-/acorn-8.8.1.tgz"
   integrity sha512-7zFpHzhnqYKrkYdUjF1HI1bzd0VygEGX8lFk4k5zVMqHEoES+P+7TKI+EvLO9WVMJ8eekdO0aDEK044xTXwPPA==
 
-agenda@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/agenda/-/agenda-4.4.0.tgz#96edbed3d653cddd9551facbcb472e632059f8b4"
-  integrity sha512-7fIO4indmmrtkDmj2woOBJnhHIM7jPtkdGR4VOApB46eeBrPGUnO28RFrmjHebc3PMDnKJI0PWFyu9L9VotgJg==
+agenda@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/agenda/-/agenda-5.0.0.tgz#1b22b8c7710e5d973498f354713665bfd5e51c33"
+  integrity sha512-jOoa7PvARpst/y2PI8h0wph4NmcjYJ/4wzFhQcHUbNgN+Hte/9h/MzKE0ZmHfIwdsSlnv3rhbBQ3Zd/gwFkThg==
   dependencies:
-    cron-parser "^3.0.0"
+    cron-parser "^3.5.0"
     date.js "~0.3.3"
-    debug "~4.3.0"
-    human-interval "~2.0.0"
+    debug "~4.3.4"
+    human-interval "~2.0.1"
     moment-timezone "~0.5.37"
-    mongodb "^4.1.0"
+    mongodb "^4.11.0"
 
 agent-base@6:
   version "6.0.2"
@@ -3272,7 +3272,7 @@ create-require@^1.1.0:
   resolved "https://registry.npmjs.org/create-require/-/create-require-1.1.1.tgz"
   integrity sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==
 
-cron-parser@^3.0.0:
+cron-parser@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/cron-parser/-/cron-parser-3.5.0.tgz#b1a9da9514c0310aa7ef99c2f3f1d0f8c235257c"
   integrity sha512-wyVZtbRs6qDfFd8ap457w3XVntdvqcwBGxBoTvJQH9KGVKL/fB+h2k3C8AqiVxvUQKN1Ps/Ns46CNViOpVDhfQ==
@@ -3343,7 +3343,7 @@ debug@3.1.0, debug@~3.1.0:
   dependencies:
     ms "2.0.0"
 
-debug@4, debug@4.3.4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.2, debug@^4.3.4, debug@~4.3.0, debug@~4.3.1, debug@~4.3.2:
+debug@4, debug@4.3.4, debug@^4.1.0, debug@^4.1.1, debug@^4.3.2, debug@^4.3.4, debug@~4.3.1, debug@~4.3.2, debug@~4.3.4:
   version "4.3.4"
   resolved "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"
   integrity sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==
@@ -4350,7 +4350,7 @@ https-proxy-agent@5.0.1, https-proxy-agent@^5.0.1:
     agent-base "6"
     debug "4"
 
-human-interval@~2.0.0:
+human-interval@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/human-interval/-/human-interval-2.0.1.tgz#655baf606c7067bb26042dcae14ec777b099af15"
   integrity sha512-r4Aotzf+OtKIGQCB3odUowy4GfUDTy3aTWTfLd7ZF2gBCy3XW3v/dJLRefZnOFFnjqs5B1TypvS8WarpBkYUNQ==
@@ -5529,7 +5529,7 @@ mongodb-connection-string-url@^2.5.4:
     "@types/whatwg-url" "^8.2.1"
     whatwg-url "^11.0.0"
 
-mongodb@^4.1.0:
+mongodb@^4.11.0:
   version "4.16.0"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-4.16.0.tgz#8b0043de7b577c6a7e0ce44a2ca7315b9c0a7927"
   integrity sha512-0EB113Fsucaq1wsY0dOhi1fmZOwFtLOtteQkiqOXGklvWMnSH3g2QS53f0KTP+/6qOkuoXE2JksubSZNmxeI+g==
