@@ -1,10 +1,8 @@
 {
   "directory": [
-    "./src/components",
-    "./src/controllers",
-    "./src/middleware",
-    "./src/models",
-    "./src/service"
+    "./src/base",
+    "./src/consumers",
+    "./src/readers"
   ],
   "exclude": [
     "__mock__",

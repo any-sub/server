@@ -14,10 +14,27 @@
   "root": true,
   "overrides": [
     {
-      "files": ["*.ts"],
+      "files": ["src/**/*.ts"],
       "extends": ["plugin:@typescript-eslint/recommended"],
       "parserOptions": {
         "project": ["tsconfig.json"]
+      },
+      "rules": {
+        "@typescript-eslint/no-inferrable-types": 0,
+        "@typescript-eslint/no-unused-vars": [
+          "warn",
+          {
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/no-var-requires": 0
+      }
+    },
+    {
+      "files": ["worker/src/**/*.ts"],
+      "extends": ["plugin:@typescript-eslint/recommended"],
+      "parserOptions": {
+        "project": ["worker/tsconfig.json"]
       },
       "rules": {
         "@typescript-eslint/no-inferrable-types": 0,

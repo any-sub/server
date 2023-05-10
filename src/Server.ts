@@ -3,14 +3,20 @@ import { PlatformApplication } from "@tsed/common";
 import { Configuration, Inject } from "@tsed/di";
 import "@tsed/platform-express"; // /!\ keep this import
 import { join } from "path";
-import { config } from "./config/index";
+import { config } from "./config";
 import * as controllers from "./controllers";
 
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
   httpPort: process.env.PORT || 8080,
-  httpsPort: false, // CHANGE
+  socketIO: {},
+  agenda: {
+    enabled: true,
+    db: {
+      address: "mongodb://root:root@127.0.0.1"
+    }
+  },
   componentsScan: false,
   mount: {
     "/": [...Object.values(controllers)]
