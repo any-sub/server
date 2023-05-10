@@ -1,6 +1,7 @@
 import { Inject, Injectable, ProviderScope, Scope } from "@tsed/di";
 import { Logger } from "@tsed/logger";
 import { SocketClient } from "./Socket";
+import { delay } from "../base";
 
 @Injectable()
 @Scope(ProviderScope.SINGLETON)
@@ -8,14 +9,20 @@ export class ConnectionManager {
   @Inject() logger: Logger;
   @Inject() client: SocketClient;
 
-  private static RETRY_WAIT = 1000 * 1;
-  private static MAX_RETRIES = 5;
+  private static RETRY_WAIT = 1000 * 2;
+  private static MAX_RETRIES = 30;
   private retries = 0;
 
   public async connect() {
     try {
-      await this.client.connect();
-      this.retries = 0;
+      this.client.connect((err) => {
+        if (err) {
+          this.logger.info(err);
+          this.retry();
+        } else {
+          this.retries = 0;
+        }
+      });
     } catch (err) {
       this.logger.error(err);
       await this.retry();
@@ -31,12 +38,6 @@ export class ConnectionManager {
       throw new MaxRetryReachedError();
     }
   }
-}
-
-async function delay(time: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
 }
 
 export class MaxRetryReachedError extends Error {}
