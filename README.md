@@ -1,32 +1,28 @@
-<p style="text-align: center" align="center">
-  <a href="https://tsed.io" target="_blank"><img src="https://tsed.io/tsed-og.png" width="200" alt="Ts.ED logo"/></a>
-</p>
+# AnySub - subscribe to anything
 
-<div align="center">
-  <h1>Ts.ED - anysub</h1>
-  <br />
-  <div align="center">
-    <a href="https://cli.tsed.io/">Website</a>
-    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-    <a href="https://cli.tsed.io/getting-started.html">Getting started</a>
-    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-    <a href="https://api.tsed.io/rest/slack/tsedio/tsed">Slack</a>
-    <span>&nbsp;&nbsp;•&nbsp;&nbsp;</span>
-    <a href="https://twitter.com/TsED_io">Twitter</a>
-  </div>
-  <hr />
-</div>
+Based on the [Ts.ED](https://tsed.io) framework.
 
-> An awesome project based on Ts.ED framework
+## Getting Started
 
-## Getting started
+### Prerequisites
 
-> **Important!** Ts.ED requires Node >= 14, Express >= 4 and TypeScript >= 4.
+* Node v16+
+* Yarn
 
-```batch
+
+```bash
 # install dependencies
-$ yarn install
+yarn
 
-# serve
-$ yarn start
+# generate prisma client and models
+yarn prisma:generate
+
+# start worker
+yarn start
+
+# run tests
+yarn test
 ```
+
+> Creating or deleting some files may require barrelsby to recreate the index files.
+> Starting the worker automatically runs barrelsby.
