@@ -8,9 +8,13 @@ Based on the [Ts.ED](https://tsed.io) framework.
 
 * Node v16+
 * Yarn
+* [Google Cloud CLI](https://cloud.google.com/sdk/docs/install-sdk)
 
 
 ```bash
+# authenticate
+yarn auth
+
 # install dependencies
 yarn
 
@@ -25,4 +29,4 @@ yarn test
 ```
 
 > Creating or deleting some files may require barrelsby to recreate the index files.
-> Starting the worker automatically runs barrelsby.
+> Starting the server automatically runs barrelsby.

@@ -1,7 +1,7 @@
 {
   "name": "@any-sub/server",
   "license": "MIT",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "description": "",
   "scripts": {
     "clean": "rimraf src/generated",
@@ -16,9 +16,11 @@
     "prisma:generate": "npx prisma generate",
     "test:lint": "eslint \"**/*.{ts,js}\"",
     "test:lint:fix": "eslint \"**/*.{ts,js}\" --fix",
-    "prettier": "prettier \"**/*.{ts,js,json,md,yml,yaml}\" --write"
+    "prettier": "prettier \"**/*.{ts,js,json,md,yml,yaml}\" --write",
+    "auth": "npx google-artifactregistry-auth"
   },
   "dependencies": {
+    "@any-sub/worker-transport": "0.0.6",
     "@prisma/client": "4.14.0",
     "@tsed/agenda": "7.28.0",
     "@tsed/ajv": "7.28.0",
