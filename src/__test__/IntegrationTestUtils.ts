@@ -6,10 +6,13 @@ export const setUpTest = () => {
   let container: StartedTestContainer;
 
   beforeAll(async () => {
-    container = await new GenericContainer("mongo").withExposedPorts(27017).withEnvironment({
-      MONGO_INITDB_ROOT_USERNAME: "root",
-      MONGO_INITDB_ROOT_PASSWORD: "root"
-    }).start();
+    container = await new GenericContainer("mongo")
+      .withExposedPorts(27017)
+      .withReuse()
+      .withEnvironment({
+        MONGO_INITDB_ROOT_USERNAME: "root",
+        MONGO_INITDB_ROOT_PASSWORD: "root"
+      }).start();
     await PlatformTest.bootstrap(Server, {
       agenda: {
         db: {
@@ -17,7 +20,7 @@ export const setUpTest = () => {
         }
       }
     })();
-  });
+  }, 1000 * 60);
 
   afterAll(async () => {
     await PlatformTest.reset();
