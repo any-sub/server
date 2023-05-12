@@ -23,6 +23,8 @@ jobs:
       - run: yarn prisma:generate
       - run: yarn build
       - run: yarn test
+        env:
+          DEBUG: "testcontainers:containers"
 
   # build-docker-image:
   #   needs: check
