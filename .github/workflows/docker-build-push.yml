@@ -24,7 +24,7 @@ jobs:
       - run: yarn build
       - run: yarn test
         env:
-          DEBUG: "testcontainers:containers"
+          DEBUG: "testcontainers*"
 
   # build-docker-image:
   #   needs: check
