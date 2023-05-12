@@ -1,16 +1,14 @@
-import {PlatformTest} from "@tsed/common";
+import { PlatformTest } from "@tsed/common";
 import SuperTest from "supertest";
-import {LoginController} from "./LoginController";
-import {Server} from "../../Server";
+import { LoginController } from "./LoginController";
+import { setUpTest } from "../../__test__/IntegrationTestUtils";
 
 describe("LoginController", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;
-
-  beforeAll(PlatformTest.bootstrap(Server));
+  setUpTest();
   beforeAll(() => {
     request = SuperTest(PlatformTest.callback());
   });
-  afterAll(PlatformTest.reset);
 
   describe("GET /login", () => {
     it("should return login page", async () => {
@@ -21,5 +19,5 @@ describe("LoginController", () => {
       expect(response.text).toContain("Email");
       expect(response.text).toContain("Password");
     });
-  })
+  });
 });

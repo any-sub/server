@@ -5,16 +5,17 @@ import "@tsed/platform-express"; // /!\ keep this import
 import { join } from "path";
 import { config } from "./config";
 import * as controllers from "./controllers";
+import { envs } from "./config/envs";
 
 @Configuration({
   ...config,
   acceptMimes: ["application/json"],
-  httpPort: process.env.PORT || 8080,
+  httpPort: envs.PORT || 8080,
   socketIO: {},
   agenda: {
     enabled: true,
     db: {
-      address: "mongodb://root:root@127.0.0.1"
+      address: envs.MONGODB_CONNECTION
     }
   },
   componentsScan: false,
