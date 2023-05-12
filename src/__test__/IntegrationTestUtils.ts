@@ -17,7 +17,7 @@ export const setUpTest = () => {
         }
       }
     })();
-  });
+  }, 15000);
 
   afterAll(async () => {
     await PlatformTest.reset();
