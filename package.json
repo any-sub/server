@@ -19,7 +19,7 @@
     "prettier": "prettier \"**/*.{ts,js,json,md,yml,yaml}\" --write"
   },
   "dependencies": {
-    "@any-sub/worker-transport": "0.0.10",
+    "@any-sub/worker-transport": "0.0.11",
     "@prisma/client": "4.14.1",
     "@tsed/agenda": "7.28.0",
     "@tsed/ajv": "7.28.0",
