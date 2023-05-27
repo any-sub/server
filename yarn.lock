@@ -10,10 +10,10 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@any-sub/worker-transport@0.0.11":
-  version "0.0.11"
-  resolved "https://europe-west1-npm.pkg.dev/personalweb-279207/any-sub/@any-sub/worker-transport/-/@any-sub/worker-transport-0.0.11.tgz#2291097f2a589cc8fa48abd43a5cb4ba8ef11f45"
-  integrity sha512-yIq51taK2JT5xDnO+3HJKOeE0vAnoN7NaoskJjPqjo83okHFTtns9xEMIgXvccOqqGYjGkA3xXVQ9NZO/G/dhQ==
+"@any-sub/worker-transport@0.0.12":
+  version "0.0.12"
+  resolved "https://europe-west1-npm.pkg.dev/personalweb-279207/any-sub/@any-sub/worker-transport/-/@any-sub/worker-transport-0.0.12.tgz#71ebda7bd944948f5d561b135d30eeedc7071b47"
+  integrity sha512-QZz+zSgUUNrt3NPUQoyM0dXgDIafwVFLqG5KtKKdpOmUT42wn0gh4j53XYOCh3BFf8ssrZ6UBi33l41zdDVMSg==
 
 "@aws-crypto/ie11-detection@^3.0.0":
   version "3.0.0"
