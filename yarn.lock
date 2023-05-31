@@ -1776,10 +1776,10 @@
   dependencies:
     tslib "2.5.0"
 
-"@tsed/logger-file@6.5.0":
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/@tsed/logger-file/-/logger-file-6.5.0.tgz#646fb3417fd921a38000fb3cb863abbace512f7e"
-  integrity sha512-/mYKR0PZbRtj7oXR7VqB2Z3/QWinfU2j0nDyEgj85BpfPARKd52kKvwuMlnEWIrZ8K1Z4p84cohqy7bTEJn2yA==
+"@tsed/logger-file@6.6.0":
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/@tsed/logger-file/-/logger-file-6.6.0.tgz#637b31ebbc543d6862c2bc6dab669d784aaaf21f"
+  integrity sha512-5tvn4QssycwiUNY5zac7o3QIIZ71HB2Zbbkw4mQv8EmcsghhRTcvgxZiTydioqjTJtECNHgler1V/btq/v6azg==
   dependencies:
     streamroller "^3.1.5"
     tslib "2.3.1"
@@ -1792,10 +1792,10 @@
     streamroller "^3.1.3"
     tslib "2.3.1"
 
-"@tsed/logger@6.5.0":
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/@tsed/logger/-/logger-6.5.0.tgz#84f45886fc6abe391a723a21cd69184c1ecb7010"
-  integrity sha512-lAr02hOt42FLPE0qKSAkYRyrZhk8W8keY/0swHmXM60dtFAIw3PtIEKc47NW16KsVRtMc/lIQm7u0fqQBrAaLA==
+"@tsed/logger@6.6.0":
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/@tsed/logger/-/logger-6.6.0.tgz#f296f8db200e23096a07ffabc8519019c509c9db"
+  integrity sha512-iCPm5hv4UPHnwHUz347w4tasFBg2yHnuMaLltD+Vp8jLfxQjgExdG6Nrs7YGLVHR/zk6olbgVluSrJ1ZkGG6Ag==
   dependencies:
     colors "1.4.0"
     date-format "^4.0.6"
