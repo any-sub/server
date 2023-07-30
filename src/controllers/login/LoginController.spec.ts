@@ -1,13 +1,13 @@
 import { PlatformTest } from "@tsed/common";
-import { LoginController } from "..";
+import { LoginController } from "./LoginController";
 
 describe("LoginController", () => {
   beforeEach(PlatformTest.create);
   afterEach(PlatformTest.reset);
 
   it("should do something", () => {
-    // const instance = PlatformTest.get<LoginController>(LoginController);
-    //
-    // expect(instance).toBeInstanceOf(LoginController);
+    const instance = PlatformTest.get<LoginController>(LoginController);
+
+    expect(instance).toBeInstanceOf(LoginController);
   });
 });

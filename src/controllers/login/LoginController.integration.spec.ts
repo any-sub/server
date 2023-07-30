@@ -1,6 +1,5 @@
 import { PlatformTest } from "@tsed/common";
 import SuperTest from "supertest";
-import { LoginController } from "./LoginController";
 import { setUpTest } from "../../__test__/IntegrationTestUtils";
 
 describe("LoginController", () => {
