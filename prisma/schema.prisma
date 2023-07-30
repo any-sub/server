@@ -15,72 +15,109 @@ generator tsed {
   output   = "../src/generated/prisma"
 }
 
-enum HtmlSelectorType {
-  CSS
-  XPATH
-}
-
 model User {
   id    String  @id @default(uuid())
   email String  @unique
   name  String?
-
-  SingleHtmlElementLookup   SingleHtmlElementLookup[]
-  MultipleHtmlElementLookup MultipleHtmlElementLookup[]
 }
 
-model LookupState {
-  id Int @id @default(autoincrement())
-
-  runTime DateTime? @updatedAt()
-  state   Json
-
-  SingleHtmlElementLookup   SingleHtmlElementLookup[]
-  MultipleHtmlElementLookup MultipleHtmlElementLookup[]
+model Job {
+  id           String     @id @default(uuid())
+  type         WorkType
+  jobSourceId  String     @unique
+  jobConsumeId String     @unique
+  jobReportId  String?
+  work         Work[]
+  created      DateTime   @default(now())
+  updated      DateTime   @updatedAt()
+  source       JobSource  @relation(fields: [jobSourceId], references: [id], onDelete: Cascade)
+  consume      JobConsume @relation(fields: [jobConsumeId], references: [id], onDelete: Cascade)
+  report       JobReport? @relation(fields: [jobReportId], references: [id], onDelete: Cascade)
 }
 
-//// Lookup Meta
-// id        String  @id @default(uuid())
-// enabled   Boolean @default(false)
-// name      String
-// frequency Int     @default(60) // number of minutes
-
-model SingleHtmlElementLookup {
-  // meta
-  id        String  @id @default(uuid())
-  enabled   Boolean @default(false)
-  name      String
-  frequency Int     @default(60) // number of minutes
-
-  url          String
-  selector     String
-  selectorType HtmlSelectorType @default(CSS)
-  expression   String?
-
-  userId        String
-  lookupStateId Int?
-
-  user  User         @relation(fields: [userId], references: [id])
-  state LookupState? @relation(fields: [lookupStateId], references: [id])
+model JobSource {
+  id       String     @id @default(uuid())
+  type     SourceType
+  location String
+  job      Job?
 }
 
-model MultipleHtmlElementLookup {
-  // meta
-  id        String  @id @default(uuid())
-  enabled   Boolean @default(false)
-  name      String
-  frequency Int     @default(60) // number of minutes
+model JobConsume {
+  id       String          @id @default(uuid())
+  lookupId String?         @unique
+  partsId  String          @unique
+  job      Job?
+  lookup   Lookup?         @relation(fields: [lookupId], references: [id], onDelete: Cascade)
+  parts    JobConsumeParts @relation(fields: [partsId], references: [id], onDelete: Cascade)
+}
 
-  url                   String
-  containerSelector     String
-  containerSelectorType HtmlSelectorType @default(CSS)
-  selector              String
-  selectorType          HtmlSelectorType @default(CSS)
-  expression            String?
+model JobReport {
+  id                  String         @id @default(uuid())
+  Job                 Job[]
+  titleReportId       String?        @unique
+  imageReportId       String?        @unique
+  descriptionReportId String?        @unique
+  urlReportId         String?        @unique
+  title               ReportOptions? @relation(name: "titleReport", fields: [titleReportId], references: [id], onDelete: Cascade)
+  image               ReportOptions? @relation(name: "imageReport", fields: [imageReportId], references: [id], onDelete: Cascade)
+  description         ReportOptions? @relation(name: "descriptionReport", fields: [descriptionReportId], references: [id], onDelete: Cascade)
+  url                 ReportOptions? @relation(name: "urlReport", fields: [urlReportId], references: [id], onDelete: Cascade)
+}
 
-  userId        String
-  lookupStateId Int?
+model ReportOptions {
+  id                String     @id @default(uuid())
+  match             String?
+  template          String?
+  titleReport       JobReport? @relation(name: "titleReport")
+  imageReport       JobReport? @relation(name: "imageReport")
+  descriptionReport JobReport? @relation(name: "descriptionReport")
+  urlReport         JobReport? @relation(name: "urlReport")
+}
 
-  user  User         @relation(fields: [userId], references: [id])
-  state LookupState? @relation(fields: [lookupStateId], references: [id])
+model JobConsumeParts {
+  id                  String      @id @default(uuid())
+  titleLookupId       String?     @unique
+  imageLookupId       String?     @unique
+  descriptionLookupId String?     @unique
+  urlLookupId         String?     @unique
+  jobConsume          JobConsume?
+  title               Lookup?     @relation(name: "titleLookup", fields: [titleLookupId], references: [id], onDelete: Cascade)
+  image               Lookup?     @relation(name: "imageLookup", fields: [imageLookupId], references: [id], onDelete: Cascade)
+  description         Lookup?     @relation(name: "descriptionLookup", fields: [descriptionLookupId], references: [id], onDelete: Cascade)
+  url                 Lookup?     @relation(name: "urlLookup", fields: [urlLookupId], references: [id], onDelete: Cascade)
+}
+
+model Lookup {
+  id               String           @id @default(uuid())
+  mode             LookupMode
+  value            String
+  consume          JobConsume?
+  partsTitle       JobConsumeParts? @relation(name: "titleLookup")
+  partsImage       JobConsumeParts? @relation(name: "imageLookup")
+  partsDescription JobConsumeParts? @relation(name: "descriptionLookup")
+  partsUrl         JobConsumeParts? @relation(name: "urlLookup")
+}
+
+enum LookupMode {
+  all
+  css
+  xpath
+  regex
+  jsonpath
+}
+
+enum WorkType {
+  http
+}
+
+enum SourceType {
+  html
+  json
+}
+
+model Work {
+  id      String   @id @default(uuid())
+  created DateTime @default(now())
+  job     Job      @relation(fields: [jobId], references: [id])
+  jobId   String
 }

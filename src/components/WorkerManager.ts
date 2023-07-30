@@ -1,5 +1,6 @@
 import { Injectable } from "@tsed/di";
 import { Worker } from "../models";
+import { Work } from "@any-sub/worker-transport";
 
 @Injectable()
 export class WorkerManager {
@@ -17,7 +18,7 @@ export class WorkerManager {
     this.workers.get(workerId)?.release();
   }
 
-  public requestWork(work: any) {
+  public requestWork(work: Work) {
     for (const [, worker] of this.workers) {
       if (worker.isFree) {
         return worker.requestWork(work);

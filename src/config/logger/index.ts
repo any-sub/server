@@ -1,23 +1,23 @@
 import { $log, PlatformLoggerSettings } from "@tsed/common";
-import { isProduction } from "../envs/index";
+import { isProduction } from "../envs";
 
-if (isProduction) {
-  $log.appenders.set("stdout", {
-    type: "stdout",
-    levels: ["info", "debug"],
-    layout: {
+const layout = isProduction
+  ? {
       type: "json"
     }
-  });
+  : undefined;
 
-  $log.appenders.set("stderr", {
-    levels: ["trace", "fatal", "error", "warn"],
-    type: "stderr",
-    layout: {
-      type: "json"
-    }
-  });
-}
+$log.appenders.set("stdout", {
+  type: "stdout",
+  levels: ["info", "debug"],
+  layout
+});
+
+$log.appenders.set("stderr", {
+  type: "stderr",
+  levels: ["trace", "fatal", "error", "warn"],
+  layout
+});
 
 export default <PlatformLoggerSettings>{
   disableRoutesSummary: isProduction

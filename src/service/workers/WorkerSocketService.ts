@@ -14,25 +14,41 @@ export class WorkerSocketService {
 
   // noinspection JSUnusedGlobalSymbols
   $onConnection(@Socket socket: SocketIO.Socket) {
-    this.logger.debug(`Socket ${socket.id} connected`);
-    this.workerManager.attach(new Worker(socket));
+    try {
+      this.logger.debug(`Socket ${socket.id} connected`);
+      this.workerManager.attach(new Worker(socket));
+    } catch (e) {
+      this.logger.error(e);
+    }
   }
 
   // noinspection JSUnusedGlobalSymbols
   $onDisconnect(@Socket socket: SocketIO.Socket) {
-    this.logger.debug(`Socket ${socket.id} disconnected`);
-    this.workerManager.detach(socket.id);
+    try {
+      this.logger.debug(`Socket ${socket.id} disconnected`);
+      this.workerManager.detach(socket.id);
+    } catch (e) {
+      this.logger.error(e);
+    }
   }
 
   @Input("result")
   public handleResult(@Args(0) data: string, @Socket socket: Socket) {
-    this.workerManager.release(socket.id);
-    this.logger.info(data);
+    try {
+      this.workerManager.release(socket.id);
+      this.logger.info(data);
+    } catch (e) {
+      this.logger.error(e);
+    }
   }
 
   @Input("error")
   public handleError(@Args(0) error: any, @Socket socket: Socket) {
-    this.workerManager.release(socket.id);
-    this.logger.info(error);
+    try {
+      this.workerManager.release(socket.id);
+      this.logger.error(error);
+    } catch (e) {
+      this.logger.error(e);
+    }
   }
 }

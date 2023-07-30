@@ -16,6 +16,12 @@ const typedEnv = parseEnv(envs, {
     defaults: {
       test: "mongodb://127.0.0.1"
     }
+  },
+  DATABASE_URL: {
+    schema: z.string().url(),
+    defaults: {
+      test: "mysql://127.0.0.1"
+    }
   }
 });
 
