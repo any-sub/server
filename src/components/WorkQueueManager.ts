@@ -1,14 +1,14 @@
 import { Inject, Injectable, OnInit } from "@tsed/di";
 import { NoFreeWorkerAvailableError, WorkerManager } from "./WorkerManager";
-import { Work } from "@any-sub/worker-transport";
 import { Logger } from "@tsed/logger";
+import { WorkJob } from "../service/jobs/WorkJob";
 
 @Injectable()
 export class WorkQueueManager implements OnInit {
   @Inject() workerManager: WorkerManager;
   @Inject() logger: Logger;
 
-  private readonly queue: Work[] = [];
+  private readonly queue: WorkJob[] = [];
 
   public $onInit(): void {
     setInterval(() => {
@@ -16,17 +16,21 @@ export class WorkQueueManager implements OnInit {
     }, 100);
   }
 
-  public enqueue(work: Work) {
-    const isNotQueued = this.queue.findIndex((q) => q.id === work.id) === -1;
+  public enqueue(workJob: WorkJob) {
+    console.log(
+      this.queue.length,
+      this.queue.findIndex((q) => q.id === workJob.id)
+    );
+    const isNotQueued = this.queue.findIndex((q) => q.id === workJob.id) === -1;
     if (isNotQueued) {
-      this.queue.push(work);
+      this.queue.push(workJob);
     }
   }
 
   private consumeQueue() {
     try {
       while (this.queue.length) {
-        this.workerManager.requestWork(this.queue[0]);
+        this.workerManager.requestWork(this.queue[0].work);
         this.queue.splice(0, 1);
       }
     } catch (e) {
