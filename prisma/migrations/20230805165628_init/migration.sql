@@ -95,49 +95,67 @@ CREATE TABLE `Lookup` (
 CREATE TABLE `Work` (
     `id` VARCHAR(191) NOT NULL,
     `created` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `status` ENUM('PENDING', 'QUEUED', 'FAILED_TO_QUEUE', 'FINISHED', 'FAILED') NOT NULL DEFAULT 'PENDING',
     `jobId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- AddForeignKey
-ALTER TABLE `Job` ADD CONSTRAINT `Job_jobSourceId_fkey` FOREIGN KEY (`jobSourceId`) REFERENCES `JobSource`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE `JobState` (
+    `id` VARCHAR(191) NOT NULL,
+    `jobId` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NULL,
+    `description` VARCHAR(191) NOT NULL,
+    `image` VARCHAR(191) NULL,
+    `url` VARCHAR(191) NULL,
+    `unitHash` VARCHAR(191) NOT NULL,
+    `created` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Job` ADD CONSTRAINT `Job_jobConsumeId_fkey` FOREIGN KEY (`jobConsumeId`) REFERENCES `JobConsume`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Job` ADD CONSTRAINT `Job_jobSourceId_fkey` FOREIGN KEY (`jobSourceId`) REFERENCES `JobSource`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `Job` ADD CONSTRAINT `Job_jobReportId_fkey` FOREIGN KEY (`jobReportId`) REFERENCES `JobReport`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Job` ADD CONSTRAINT `Job_jobConsumeId_fkey` FOREIGN KEY (`jobConsumeId`) REFERENCES `JobConsume`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobConsume` ADD CONSTRAINT `JobConsume_lookupId_fkey` FOREIGN KEY (`lookupId`) REFERENCES `Lookup`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `Job` ADD CONSTRAINT `Job_jobReportId_fkey` FOREIGN KEY (`jobReportId`) REFERENCES `JobReport`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobConsume` ADD CONSTRAINT `JobConsume_partsId_fkey` FOREIGN KEY (`partsId`) REFERENCES `JobConsumeParts`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `JobConsume` ADD CONSTRAINT `JobConsume_lookupId_fkey` FOREIGN KEY (`lookupId`) REFERENCES `Lookup`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobReport` ADD CONSTRAINT `JobReport_titleReportId_fkey` FOREIGN KEY (`titleReportId`) REFERENCES `ReportOptions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobConsume` ADD CONSTRAINT `JobConsume_partsId_fkey` FOREIGN KEY (`partsId`) REFERENCES `JobConsumeParts`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobReport` ADD CONSTRAINT `JobReport_imageReportId_fkey` FOREIGN KEY (`imageReportId`) REFERENCES `ReportOptions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobReport` ADD CONSTRAINT `JobReport_titleReportId_fkey` FOREIGN KEY (`titleReportId`) REFERENCES `ReportOptions`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobReport` ADD CONSTRAINT `JobReport_descriptionReportId_fkey` FOREIGN KEY (`descriptionReportId`) REFERENCES `ReportOptions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobReport` ADD CONSTRAINT `JobReport_imageReportId_fkey` FOREIGN KEY (`imageReportId`) REFERENCES `ReportOptions`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobReport` ADD CONSTRAINT `JobReport_urlReportId_fkey` FOREIGN KEY (`urlReportId`) REFERENCES `ReportOptions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobReport` ADD CONSTRAINT `JobReport_descriptionReportId_fkey` FOREIGN KEY (`descriptionReportId`) REFERENCES `ReportOptions`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobConsumeParts` ADD CONSTRAINT `JobConsumeParts_titleLookupId_fkey` FOREIGN KEY (`titleLookupId`) REFERENCES `Lookup`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobReport` ADD CONSTRAINT `JobReport_urlReportId_fkey` FOREIGN KEY (`urlReportId`) REFERENCES `ReportOptions`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobConsumeParts` ADD CONSTRAINT `JobConsumeParts_imageLookupId_fkey` FOREIGN KEY (`imageLookupId`) REFERENCES `Lookup`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobConsumeParts` ADD CONSTRAINT `JobConsumeParts_titleLookupId_fkey` FOREIGN KEY (`titleLookupId`) REFERENCES `Lookup`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobConsumeParts` ADD CONSTRAINT `JobConsumeParts_descriptionLookupId_fkey` FOREIGN KEY (`descriptionLookupId`) REFERENCES `Lookup`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobConsumeParts` ADD CONSTRAINT `JobConsumeParts_imageLookupId_fkey` FOREIGN KEY (`imageLookupId`) REFERENCES `Lookup`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `JobConsumeParts` ADD CONSTRAINT `JobConsumeParts_urlLookupId_fkey` FOREIGN KEY (`urlLookupId`) REFERENCES `Lookup`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `JobConsumeParts` ADD CONSTRAINT `JobConsumeParts_descriptionLookupId_fkey` FOREIGN KEY (`descriptionLookupId`) REFERENCES `Lookup`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `JobConsumeParts` ADD CONSTRAINT `JobConsumeParts_urlLookupId_fkey` FOREIGN KEY (`urlLookupId`) REFERENCES `Lookup`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Work` ADD CONSTRAINT `Work_jobId_fkey` FOREIGN KEY (`jobId`) REFERENCES `Job`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `JobState` ADD CONSTRAINT `JobState_jobId_fkey` FOREIGN KEY (`jobId`) REFERENCES `Job`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

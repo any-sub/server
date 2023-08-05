@@ -4,11 +4,14 @@ import { Inject } from "@tsed/di";
 import { WorkerManager } from "../../components";
 import { Worker } from "../../models";
 import { Logger } from "@tsed/logger";
+import { ResultHandler } from "../result/ResultHandler";
+import { StateParser } from "@any-sub/worker-transport";
 
 @SocketService("/workers")
 export class WorkerSocketService {
   @Inject() logger: Logger;
   @Inject() workerManager: WorkerManager;
+  @Inject() resultHandler: ResultHandler;
   @IO() io: SocketIO.Server;
   @Nsp nsp: SocketIO.Namespace;
 
@@ -33,10 +36,10 @@ export class WorkerSocketService {
   }
 
   @Input("result")
-  public handleResult(@Args(0) data: string, @Socket socket: Socket) {
+  public async handleResult(@Args(0) data: string, @Socket socket: Socket) {
     try {
       this.workerManager.release(socket.id);
-      this.logger.info(data);
+      await this.resultHandler.handle(StateParser.parse(JSON.parse(data)));
     } catch (e) {
       this.logger.error(e);
     }

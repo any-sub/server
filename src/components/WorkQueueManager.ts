@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnInit } from "@tsed/di";
 import { NoFreeWorkerAvailableError, WorkerManager } from "./WorkerManager";
 import { Logger } from "@tsed/logger";
-import { WorkJob } from "../service/jobs/WorkJob";
+import { WorkJob } from "../service";
 
 @Injectable()
 export class WorkQueueManager implements OnInit {
@@ -16,11 +16,13 @@ export class WorkQueueManager implements OnInit {
     }, 100);
   }
 
-  public enqueue(workJob: WorkJob) {
+  public enqueue(workJob: WorkJob): boolean {
     const isNotQueued = this.queue.findIndex((q) => q.id === workJob.id) === -1;
     if (isNotQueued) {
       this.queue.push(workJob);
+      return true;
     }
+    return false;
   }
 
   private consumeQueue() {

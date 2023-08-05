@@ -23,6 +23,7 @@ model User {
 
 model Job {
   id           String     @id @default(uuid())
+  name         String
   type         WorkType
   jobSourceId  String     @unique
   jobConsumeId String     @unique
@@ -30,9 +31,10 @@ model Job {
   work         Work[]
   created      DateTime   @default(now())
   updated      DateTime   @updatedAt()
-  source       JobSource  @relation(fields: [jobSourceId], references: [id], onDelete: Cascade)
-  consume      JobConsume @relation(fields: [jobConsumeId], references: [id], onDelete: Cascade)
-  report       JobReport? @relation(fields: [jobReportId], references: [id], onDelete: Cascade)
+  source       JobSource  @relation(fields: [jobSourceId], references: [id], onDelete: Restrict)
+  consume      JobConsume @relation(fields: [jobConsumeId], references: [id], onDelete: Restrict)
+  report       JobReport? @relation(fields: [jobReportId], references: [id], onDelete: Restrict)
+  jobState     JobState[]
 }
 
 model JobSource {
@@ -47,8 +49,8 @@ model JobConsume {
   lookupId String?         @unique
   partsId  String          @unique
   job      Job?
-  lookup   Lookup?         @relation(fields: [lookupId], references: [id], onDelete: Cascade)
-  parts    JobConsumeParts @relation(fields: [partsId], references: [id], onDelete: Cascade)
+  lookup   Lookup?         @relation(fields: [lookupId], references: [id], onDelete: Restrict)
+  parts    JobConsumeParts @relation(fields: [partsId], references: [id], onDelete: Restrict)
 }
 
 model JobReport {
@@ -58,10 +60,10 @@ model JobReport {
   imageReportId       String?        @unique
   descriptionReportId String?        @unique
   urlReportId         String?        @unique
-  title               ReportOptions? @relation(name: "titleReport", fields: [titleReportId], references: [id], onDelete: Cascade)
-  image               ReportOptions? @relation(name: "imageReport", fields: [imageReportId], references: [id], onDelete: Cascade)
-  description         ReportOptions? @relation(name: "descriptionReport", fields: [descriptionReportId], references: [id], onDelete: Cascade)
-  url                 ReportOptions? @relation(name: "urlReport", fields: [urlReportId], references: [id], onDelete: Cascade)
+  title               ReportOptions? @relation(name: "titleReport", fields: [titleReportId], references: [id], onDelete: Restrict)
+  image               ReportOptions? @relation(name: "imageReport", fields: [imageReportId], references: [id], onDelete: Restrict)
+  description         ReportOptions? @relation(name: "descriptionReport", fields: [descriptionReportId], references: [id], onDelete: Restrict)
+  url                 ReportOptions? @relation(name: "urlReport", fields: [urlReportId], references: [id], onDelete: Restrict)
 }
 
 model ReportOptions {
@@ -81,10 +83,10 @@ model JobConsumeParts {
   descriptionLookupId String?     @unique
   urlLookupId         String?     @unique
   jobConsume          JobConsume?
-  title               Lookup?     @relation(name: "titleLookup", fields: [titleLookupId], references: [id], onDelete: Cascade)
-  image               Lookup?     @relation(name: "imageLookup", fields: [imageLookupId], references: [id], onDelete: Cascade)
-  description         Lookup?     @relation(name: "descriptionLookup", fields: [descriptionLookupId], references: [id], onDelete: Cascade)
-  url                 Lookup?     @relation(name: "urlLookup", fields: [urlLookupId], references: [id], onDelete: Cascade)
+  title               Lookup?     @relation(name: "titleLookup", fields: [titleLookupId], references: [id], onDelete: Restrict)
+  image               Lookup?     @relation(name: "imageLookup", fields: [imageLookupId], references: [id], onDelete: Restrict)
+  description         Lookup?     @relation(name: "descriptionLookup", fields: [descriptionLookupId], references: [id], onDelete: Restrict)
+  url                 Lookup?     @relation(name: "urlLookup", fields: [urlLookupId], references: [id], onDelete: Restrict)
 }
 
 model Lookup {
@@ -116,8 +118,30 @@ enum SourceType {
 }
 
 model Work {
-  id      String   @id @default(uuid())
-  created DateTime @default(now())
-  job     Job      @relation(fields: [jobId], references: [id])
-  jobId   String
+  id           String     @id @default(uuid())
+  created      DateTime   @default(now())
+  status       WorkStatus @default(PENDING)
+  statusReason String?
+  job          Job        @relation(fields: [jobId], references: [id])
+  jobId        String
+}
+
+enum WorkStatus {
+  PENDING
+  QUEUED
+  FAILED_TO_QUEUE
+  FINISHED
+  FAILED
+}
+
+model JobState {
+  id          String   @id @default(uuid())
+  jobId       String
+  title       String?
+  description String
+  image       String?
+  url         String?
+  unitHash    String
+  created     DateTime @default(now())
+  job         Job      @relation(fields: [jobId], references: [id])
 }
