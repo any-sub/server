@@ -1,10 +1,10 @@
 import { PlatformTest } from "@tsed/common";
 import SuperTest from "supertest";
-import { setUpTest } from "../../__test__/IntegrationTestUtils";
+import { setUpContainers } from "../../__test__/IntegrationTestUtils";
 
 describe("LoginController", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;
-  setUpTest();
+  setUpContainers();
   beforeAll(() => {
     request = SuperTest(PlatformTest.callback());
   });

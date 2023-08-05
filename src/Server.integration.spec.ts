@@ -1,11 +1,11 @@
 import { PlatformTest } from "@tsed/common";
 import SuperTest from "supertest";
-import { Server } from "./Server";
-import { setUpTest } from "./__test__/IntegrationTestUtils";
+import { setUpContainers } from "./__test__/IntegrationTestUtils";
 
 describe("Server", () => {
   let request: SuperTest.SuperTest<SuperTest.Test>;
-  setUpTest();
+  setUpContainers();
+
   beforeEach(() => {
     request = SuperTest(PlatformTest.callback());
   });
@@ -15,7 +15,7 @@ describe("Server", () => {
 
     expect(response.body).toEqual({
       errors: [],
-      message: "Resource \"/rest\" not found",
+      message: 'Resource "/rest" not found',
       name: "NOT_FOUND",
       status: 404
     });
