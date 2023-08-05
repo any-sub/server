@@ -1,8 +1,8 @@
 import "@tsed/ajv";
 import { PlatformApplication } from "@tsed/common";
 import { Configuration, Inject } from "@tsed/di";
-import "@tsed/platform-express"; // /!\ keep this import
-import { join } from "path";
+import "@tsed/platform-express";
+import "@tsed/swagger";
 import { config } from "./config";
 import * as controllers from "./controllers";
 import { envs, isProduction } from "./config/envs";
@@ -31,13 +31,13 @@ import { envs, isProduction } from "./config/envs";
     "json-parser",
     { use: "urlencoded-parser", options: { extended: true } }
   ],
-  views: {
-    root: join(process.cwd(), "../views"),
-    extensions: {
-      ejs: "ejs"
+  exclude: ["**/*.spec.ts"],
+  swagger: [
+    {
+      path: "/docs",
+      specVersion: "3.0.3"
     }
-  },
-  exclude: ["**/*.spec.ts"]
+  ]
 })
 export class Server {
   @Inject()
