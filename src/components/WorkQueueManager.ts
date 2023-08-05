@@ -17,10 +17,6 @@ export class WorkQueueManager implements OnInit {
   }
 
   public enqueue(workJob: WorkJob) {
-    console.log(
-      this.queue.length,
-      this.queue.findIndex((q) => q.id === workJob.id)
-    );
     const isNotQueued = this.queue.findIndex((q) => q.id === workJob.id) === -1;
     if (isNotQueued) {
       this.queue.push(workJob);
