@@ -1,1 +1,1 @@
-type UUID = string;
+type Nullable<T> = T | null;

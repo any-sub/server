@@ -1,44 +1,32 @@
-import { LookupMode, SourceType, WorkType } from "../../../generated/prisma";
+import { WorkType } from "../../../generated/prisma";
+import { Enum, Format, Property, Required } from "@tsed/schema";
+import { JobSource } from "./JobSource";
+import { JobConsume } from "./JobConsume";
+import { JobReport } from "./JobReport";
 
 export class Job {
-  id: UUID;
+  @Property(String)
+  @Format("uuid")
+  id: string;
+
+  @Property(String)
+  @Required()
   name: string;
+
+  @Property(String)
+  @Enum(WorkType)
+  @Required()
   type: WorkType;
+
+  @Property(JobSource)
+  @Required()
   source: JobSource;
+
+  @Property(JobConsume)
+  @Required()
   consume: JobConsume;
+
+  @Property(JobReport)
+  @Required()
   report?: JobReport;
-}
-
-export class JobSource {
-  type: SourceType;
-  location: string;
-}
-
-export class JobConsume {
-  lookup: Lookup;
-  parts: ConsumeParts;
-}
-
-export class Lookup {
-  mode: LookupMode;
-  value: string;
-}
-
-export class ConsumeParts {
-  title: Lookup;
-  description: Lookup;
-  image: Lookup;
-  url: Lookup;
-}
-
-export class JobReport {
-  title: Report;
-  description: Report;
-  image: Report;
-  url: Report;
-}
-
-export class Report {
-  match?: string;
-  template?: string;
 }

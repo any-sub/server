@@ -1,14 +1,22 @@
 import { Injectable } from "@tsed/di";
 import { JobModel } from "../generated/prisma";
-import { ConsumeParts, Job, JobConsume, JobReport, JobSource, Lookup, Report } from "../models/domain/job/Job";
+import { ConsumeParts, Job, JobConsume, JobReport, JobSource, Lookup, Report } from "../models";
+import { Prisma } from ".prisma/client";
+import { partMapper } from "../utils/TypeUtils";
 
 @Injectable()
 export class JobMapper {
-  public toDomain(model: JobModel): Job {
+  public toDomain(model: JobModel): Job;
+  public toDomain(model: JobModel | null | undefined): Job | null;
+  public toDomain(model: JobModel | null | undefined): Job | null {
+    if (!model) {
+      return null;
+    }
+
     const job = new Job();
     job.id = model.id;
     job.type = model.type;
-    // job.name = model.name;
+    job.name = model.name;
 
     job.source = new JobSource();
     job.source.type = model.source.type;
@@ -21,51 +29,84 @@ export class JobMapper {
       job.consume.lookup.value = model.consume.lookup.value;
     }
     job.consume.parts = new ConsumeParts();
-    if (model.consume.parts.title) {
-      job.consume.parts.title = new Lookup();
-      job.consume.parts.title.mode = model.consume.parts.title.mode;
-      job.consume.parts.title.value = model.consume.parts.title.value;
-    }
-    if (model.consume.parts.description) {
-      job.consume.parts.description = new Lookup();
-      job.consume.parts.description.mode = model.consume.parts.description.mode;
-      job.consume.parts.description.value = model.consume.parts.description.value;
-    }
-    if (model.consume.parts.image) {
-      job.consume.parts.image = new Lookup();
-      job.consume.parts.image.mode = model.consume.parts.image.mode;
-      job.consume.parts.image.value = model.consume.parts.image.value;
-    }
-    if (model.consume.parts.url) {
-      job.consume.parts.url = new Lookup();
-      job.consume.parts.url.mode = model.consume.parts.url.mode;
-      job.consume.parts.url.value = model.consume.parts.url.value;
-    }
+    partMapper((part) => {
+      const modelPart = model.consume.parts[part];
+      if (modelPart) {
+        job.consume.parts[part] = new Lookup();
+        job.consume.parts[part].mode = modelPart.mode;
+        job.consume.parts[part].value = modelPart.value;
+      }
+    });
 
     if (model.report) {
-      job.report = new JobReport();
-      if (model.report.title) {
-        job.report.title = new Report();
-        job.report.title.match = model.report.title.match ?? undefined;
-        job.report.title.template = model.report.title.template ?? undefined;
-      }
-      if (model.report.description) {
-        job.report.description = new Report();
-        job.report.description.match = model.report.description.match ?? undefined;
-        job.report.description.template = model.report.description.template ?? undefined;
-      }
-      if (model.report.image) {
-        job.report.image = new Report();
-        job.report.image.match = model.report.image.match ?? undefined;
-        job.report.image.template = model.report.image.template ?? undefined;
-      }
-      if (model.report.url) {
-        job.report.url = new Report();
-        job.report.url.match = model.report.url.match ?? undefined;
-        job.report.url.template = model.report.url.template ?? undefined;
-      }
+      const jobReport = (job.report = new JobReport());
+      partMapper((part) => {
+        const reportPart = model.report?.[part];
+        if (reportPart) {
+          jobReport.title = new Report();
+          jobReport.title.match = reportPart.match ?? undefined;
+          jobReport.title.template = reportPart.template ?? undefined;
+        }
+      });
     }
 
     return job;
+  }
+
+  public toCreate(job: Job): Prisma.JobCreateInput {
+    return {
+      name: job.name,
+      type: job.type,
+      source: {
+        create: {
+          type: job.source.type,
+          location: job.source.location
+        }
+      },
+      consume: {
+        create: {
+          lookup: job.consume.lookup
+            ? {
+                create: {
+                  mode: job.consume.lookup.mode,
+                  value: job.consume.lookup.value
+                }
+              }
+            : {},
+          parts: job.consume.parts
+            ? {
+                create: {
+                  ...partMapper((part) => {
+                    return job.consume.parts[part]
+                      ? {
+                          create: {
+                            mode: job.consume.parts[part].mode,
+                            value: job.consume.parts[part].value
+                          }
+                        }
+                      : {};
+                  })
+                }
+              }
+            : {}
+        }
+      },
+      report: job.report
+        ? {
+            create: {
+              ...partMapper((part) => {
+                return job.report?.[part]
+                  ? {
+                      create: {
+                        match: job.report[part].match,
+                        template: job.report[part].template
+                      }
+                    }
+                  : {};
+              })
+            }
+          }
+        : {}
+    };
   }
 }

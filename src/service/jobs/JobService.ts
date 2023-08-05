@@ -1,11 +1,12 @@
 import { Agenda, Every } from "@tsed/agenda";
 import { Inject } from "@tsed/di";
 import { Logger } from "@tsed/logger";
-import { JobModel, WorksRepository, WorkStatus } from "../../generated/prisma";
+import { WorksRepository, WorkStatus } from "../../generated/prisma";
 import { WorkMapper } from "../../mappers/WorkMapper";
 import { WorkQueueManager } from "../../components";
 import { WorkJob } from "./WorkJob";
 import { JobDelegator } from "../../delegators/JobDelegator";
+import { Job } from "../../models";
 
 @Agenda({ namespace: "schedule" })
 export class JobService {
@@ -18,10 +19,10 @@ export class JobService {
   @Every("10 minutes", { name: "work" })
   public async scheduleWork() {
     try {
-      let jobs: JobModel[] = [];
+      let jobs: Job[] = [];
       let skip = 0;
       do {
-        jobs = await this.jobDelegator.findJobs({ skip });
+        jobs = await this.jobDelegator.getAll({ skip });
         for (const job of jobs) {
           const work = await this.createWork(job);
           await this.setWorkStatus(work, this.queueManager.enqueue(work));
@@ -33,7 +34,7 @@ export class JobService {
     }
   }
 
-  private async createWork(job: JobModel): Promise<WorkJob> {
+  private async createWork(job: Job): Promise<WorkJob> {
     const transportWork = this.workMapper.toTransport(job);
     await this.worksRepo.create({
       data: {

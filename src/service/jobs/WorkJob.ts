@@ -1,6 +1,6 @@
 import { Work } from "@any-sub/worker-transport";
 
 export type WorkJob = {
-  id: UUID;
+  id: string;
   work: Work;
 };
