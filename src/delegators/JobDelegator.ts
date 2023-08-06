@@ -9,31 +9,6 @@ export class JobDelegator {
   @Inject() jobsRepo: JobsRepository;
   @Inject() jobMapper: JobMapper;
 
-  private readonly fullJobInclude = {
-    source: true,
-    consume: {
-      include: {
-        lookup: true,
-        parts: {
-          include: {
-            title: true,
-            image: true,
-            description: true,
-            url: true
-          }
-        }
-      }
-    },
-    report: {
-      include: {
-        title: true,
-        image: true,
-        description: true,
-        url: true
-      }
-    }
-  };
-
   public async getAll(opts: {
     skip?: number;
     take?: number;
@@ -44,7 +19,9 @@ export class JobDelegator {
         take: 10,
         skip: 0,
         ...opts,
-        include: this.fullJobInclude
+        where: {
+          deleted: null
+        }
       })
     ).map((jobModel) => this.jobMapper.toDomain(jobModel));
   }
@@ -53,9 +30,9 @@ export class JobDelegator {
     return this.jobMapper.toDomain(
       await this.jobsRepo.findUnique({
         where: {
-          id: jobId
-        },
-        include: this.fullJobInclude
+          id: jobId,
+          deleted: null
+        }
       })
     );
   }
@@ -63,9 +40,22 @@ export class JobDelegator {
   public async create(job: Job) {
     return this.jobMapper.toDomain(
       await this.jobsRepo.create({
-        data: this.jobMapper.toCreate(job),
-        include: this.fullJobInclude
+        data: this.jobMapper.toModel(job)
       })
     );
+  }
+
+  public async delete(jobId: string) {
+    const job = await this.get(jobId);
+    if (job) {
+      await this.jobsRepo.update({
+        where: {
+          id: jobId
+        },
+        data: {
+          deleted: new Date()
+        }
+      });
+    }
   }
 }

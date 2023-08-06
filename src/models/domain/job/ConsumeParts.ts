@@ -3,14 +3,14 @@ import { Property } from "@tsed/schema";
 
 export class ConsumeParts {
   @Property(Lookup)
-  title: Lookup;
+  title?: Lookup;
 
   @Property(Lookup)
-  description: Lookup;
+  description?: Lookup;
 
   @Property(Lookup)
-  image: Lookup;
+  image?: Lookup;
 
   @Property(Lookup)
-  url: Lookup;
+  url?: Lookup;
 }

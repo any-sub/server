@@ -22,82 +22,32 @@ model User {
 }
 
 model Job {
-  id           String     @id @default(uuid())
-  name         String
-  type         WorkType
-  jobSourceId  String     @unique
-  jobConsumeId String     @unique
-  jobReportId  String?
-  work         Work[]
-  created      DateTime   @default(now())
-  updated      DateTime   @updatedAt()
-  source       JobSource  @relation(fields: [jobSourceId], references: [id], onDelete: Restrict)
-  consume      JobConsume @relation(fields: [jobConsumeId], references: [id], onDelete: Restrict)
-  report       JobReport? @relation(fields: [jobReportId], references: [id], onDelete: Restrict)
-  jobState     JobState[]
-}
-
-model JobSource {
-  id       String     @id @default(uuid())
-  type     SourceType
-  location String
-  job      Job?
-}
-
-model JobConsume {
-  id       String          @id @default(uuid())
-  lookupId String?         @unique
-  partsId  String          @unique
-  job      Job?
-  lookup   Lookup?         @relation(fields: [lookupId], references: [id], onDelete: Restrict)
-  parts    JobConsumeParts @relation(fields: [partsId], references: [id], onDelete: Restrict)
-}
-
-model JobReport {
-  id                  String         @id @default(uuid())
-  Job                 Job[]
-  titleReportId       String?        @unique
-  imageReportId       String?        @unique
-  descriptionReportId String?        @unique
-  urlReportId         String?        @unique
-  title               ReportOptions? @relation(name: "titleReport", fields: [titleReportId], references: [id], onDelete: Restrict)
-  image               ReportOptions? @relation(name: "imageReport", fields: [imageReportId], references: [id], onDelete: Restrict)
-  description         ReportOptions? @relation(name: "descriptionReport", fields: [descriptionReportId], references: [id], onDelete: Restrict)
-  url                 ReportOptions? @relation(name: "urlReport", fields: [urlReportId], references: [id], onDelete: Restrict)
-}
-
-model ReportOptions {
-  id                String     @id @default(uuid())
-  match             String?
-  template          String?
-  titleReport       JobReport? @relation(name: "titleReport")
-  imageReport       JobReport? @relation(name: "imageReport")
-  descriptionReport JobReport? @relation(name: "descriptionReport")
-  urlReport         JobReport? @relation(name: "urlReport")
-}
-
-model JobConsumeParts {
-  id                  String      @id @default(uuid())
-  titleLookupId       String?     @unique
-  imageLookupId       String?     @unique
-  descriptionLookupId String?     @unique
-  urlLookupId         String?     @unique
-  jobConsume          JobConsume?
-  title               Lookup?     @relation(name: "titleLookup", fields: [titleLookupId], references: [id], onDelete: Restrict)
-  image               Lookup?     @relation(name: "imageLookup", fields: [imageLookupId], references: [id], onDelete: Restrict)
-  description         Lookup?     @relation(name: "descriptionLookup", fields: [descriptionLookupId], references: [id], onDelete: Restrict)
-  url                 Lookup?     @relation(name: "urlLookup", fields: [urlLookupId], references: [id], onDelete: Restrict)
-}
-
-model Lookup {
-  id               String           @id @default(uuid())
-  mode             LookupMode
-  value            String
-  consume          JobConsume?
-  partsTitle       JobConsumeParts? @relation(name: "titleLookup")
-  partsImage       JobConsumeParts? @relation(name: "imageLookup")
-  partsDescription JobConsumeParts? @relation(name: "descriptionLookup")
-  partsUrl         JobConsumeParts? @relation(name: "urlLookup")
+  id                        String      @id @default(uuid())
+  name                      String
+  type                      WorkType
+  created                   DateTime    @default(now())
+  updated                   DateTime    @updatedAt()
+  deleted                   DateTime?
+  sourceType                SourceType
+  sourceLocation            String
+  consumeMode               LookupMode?
+  consumeValue              String?
+  consumeTitleMode          LookupMode?
+  consumeTitleValue         String?
+  consumeDescriptionMode    LookupMode?
+  consumeDescriptionValue   String?
+  consumeImageMode          LookupMode?
+  consumeImageValue         String?
+  consumeUrlMode            LookupMode?
+  consumeUrlValue           String?
+  reportTitleMatch          String?
+  reportTitleTemplate       String?
+  reportDescriptionMatch    String?
+  reportDescriptionTemplate String?
+  reportImageMatch          String?
+  reportImageTemplate       String?
+  reportUrlMatch            String?
+  reportUrlTemplate         String?
 }
 
 enum LookupMode {
@@ -122,13 +72,13 @@ model Work {
   created      DateTime   @default(now())
   status       WorkStatus @default(PENDING)
   statusReason String?
-  job          Job        @relation(fields: [jobId], references: [id])
   jobId        String
 }
 
 enum WorkStatus {
   PENDING
   QUEUED
+  CANCELLED_ON_RESTART
   FAILED_TO_QUEUE
   FINISHED
   FAILED
@@ -143,5 +93,4 @@ model JobState {
   url         String?
   unitHash    String
   created     DateTime @default(now())
-  job         Job      @relation(fields: [jobId], references: [id])
 }

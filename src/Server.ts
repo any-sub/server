@@ -19,7 +19,6 @@ import { envs, isProduction } from "./config/envs";
       address: envs.MONGODB_CONNECTION
     }
   },
-  componentsScan: false,
   mount: {
     "/": [...Object.values(controllers)]
   },

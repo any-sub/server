@@ -4,8 +4,8 @@ import { Property } from "@tsed/schema";
 
 export class JobConsume {
   @Property(Lookup)
-  lookup: Lookup;
+  lookup?: Lookup;
 
   @Property(ConsumeParts)
-  parts: ConsumeParts;
+  parts?: ConsumeParts;
 }

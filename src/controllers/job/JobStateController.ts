@@ -1,9 +1,10 @@
 import { Controller, Inject } from "@tsed/di";
-import { Get } from "@tsed/schema";
+import { Get, Tags } from "@tsed/schema";
 import { PathParams } from "@tsed/common";
 import { JobStatesRepository } from "../../generated/prisma";
 
 @Controller("/job/:jobId/state")
+@Tags("State")
 export class JobStateController {
   @Inject() jobStateRepo: JobStatesRepository;
 

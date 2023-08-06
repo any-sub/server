@@ -1,15 +1,17 @@
 import { Controller, Inject } from "@tsed/di";
-import { Format, Get, Post, Returns } from "@tsed/schema";
+import { Delete, Format, Get, Post, Returns, Summary, Tags } from "@tsed/schema";
 import { JobDelegator } from "../../delegators/JobDelegator";
 import { Job } from "../../models";
 import { BodyParams, PathParams } from "@tsed/common";
 import { NotFound } from "@tsed/exceptions";
 
 @Controller("/job")
+@Tags("Job")
 export class JobController {
   @Inject() jobDelegator: JobDelegator;
 
   @Get()
+  @Summary("Get all jobs")
   @Returns(200, Array).Of(Job)
   public async getJobs() {
     return await this.jobDelegator.getAll({
@@ -20,6 +22,7 @@ export class JobController {
   }
 
   @Post()
+  @Summary("Create a job")
   @Returns(200, Job)
   public async createJob(@BodyParams() job: Job) {
     return await this.jobDelegator.create(job);
@@ -33,5 +36,11 @@ export class JobController {
       throw new NotFound(`Job with ID "${jobId}" not found.`);
     }
     return job;
+  }
+
+  @Delete("/:jobId")
+  @Returns(200, Job)
+  public async deleteJob(@PathParams("jobId") @Format("uuid") jobId: string) {
+    await this.jobDelegator.delete(jobId);
   }
 }
