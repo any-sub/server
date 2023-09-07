@@ -1,6 +1,11 @@
 import { GenericContainer, StartedTestContainer } from "testcontainers";
 import { PlatformTest } from "@tsed/common";
 import { Server } from "../Server";
+import { exec } from "node:child_process";
+import { promisify } from "node:util";
+import * as path from "path";
+
+const execAsync = promisify(exec);
 
 export const setUpContainers = () => {
   let mongo: StartedTestContainer;
@@ -25,6 +30,14 @@ export const setUpContainers = () => {
     ]);
     mongo = startedMongo;
     mysql = startedMysql;
+    const mysqlConnection = `mysql://root:root@127.0.0.1:${mysql.getMappedPort(3306)}/test`;
+    await execAsync("npx prisma migrate dev --name init", {
+      env: {
+        ...process.env,
+        DATABASE_URL: mysqlConnection
+      },
+      cwd: path.join(__dirname, "../..")
+    });
     await PlatformTest.bootstrap(Server, {
       agenda: {
         db: {
@@ -34,7 +47,7 @@ export const setUpContainers = () => {
       prisma: {
         datasources: {
           db: {
-            url: `mysql://root:root@127.0.0.1:${mysql.getMappedPort(3306)}`
+            url: mysqlConnection
           }
         }
       }

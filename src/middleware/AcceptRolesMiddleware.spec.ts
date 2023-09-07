@@ -3,10 +3,10 @@ import { Context, PlatformTest, Req } from "@tsed/common";
 import { Unauthorized } from "@tsed/exceptions";
 import { User } from "../models";
 import { AcceptRolesMiddleware } from "./AcceptRolesMiddleware";
+import { setUpContainers } from "../__test__/IntegrationTestUtils";
 
 describe("AcceptRolesMiddleware", () => {
-  beforeEach(PlatformTest.create);
-  afterEach(PlatformTest.reset);
+  setUpContainers();
 
   const mockContext = {
     endpoint: {
