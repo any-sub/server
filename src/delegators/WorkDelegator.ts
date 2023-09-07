@@ -5,6 +5,18 @@ import { WorksRepository, WorkStatus } from "../generated/prisma";
 export class WorkDelegator {
   @Inject() workRepo: WorksRepository;
 
+  public async fail(workId: string, reason?: string) {
+    await this.workRepo.update({
+      where: {
+        id: workId
+      },
+      data: {
+        status: WorkStatus.FAILED,
+        statusReason: reason
+      }
+    });
+  }
+
   public async cleanup() {
     await this.workRepo.updateMany({
       where: {

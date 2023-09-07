@@ -5,12 +5,14 @@ import { WorkerManager } from "../../components";
 import { Worker } from "../../models";
 import { Logger } from "@tsed/logger";
 import { ResultHandler } from "../result/ResultHandler";
-import { StateParser } from "@any-sub/worker-transport";
+import { StateParser, WorkErrorParser } from "@any-sub/worker-transport";
+import { WorkDelegator } from "../../delegators/WorkDelegator";
 
 @SocketService("/workers")
 export class WorkerSocketService {
   @Inject() logger: Logger;
   @Inject() workerManager: WorkerManager;
+  @Inject() workDelegator: WorkDelegator;
   @Inject() resultHandler: ResultHandler;
   @IO() io: SocketIO.Server;
   @Nsp nsp: SocketIO.Namespace;
@@ -46,10 +48,14 @@ export class WorkerSocketService {
   }
 
   @Input("error")
-  public handleError(@Args(0) error: any, @Socket socket: Socket) {
+  public async handleError(@Args(0) data: string, @Socket socket: Socket) {
     try {
+      const error = WorkErrorParser.parse(JSON.parse(data));
+      if (error.id) {
+        await this.workDelegator.fail(error.id, error.message);
+      }
       this.workerManager.release(socket.id);
-      this.logger.error(error);
+      this.logger.warn(error?.message ?? error.code);
     } catch (e) {
       this.logger.error(e);
     }
