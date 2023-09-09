@@ -19,7 +19,7 @@ export class ResultHandler {
     } catch (handleError) {
       this.logger.error(`Failed to handle result for work "${work.id}"`, handleError);
       try {
-        await this.updateWorkStatus(work, WorkStatus.FAILED, handleError.message);
+        await this.updateWorkStatus(work, WorkStatus.FAILED, "RESULT_HANDLE_ERROR");
       } catch (workStatusError) {
         this.logger.fatal(`Failed to set work "${work.id}" status to failed.`, workStatusError);
       }

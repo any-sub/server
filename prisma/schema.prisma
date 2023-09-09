@@ -71,7 +71,7 @@ model Work {
   id           String     @id @default(uuid())
   created      DateTime   @default(now())
   status       WorkStatus @default(PENDING)
-  statusReason String?
+  statusReason String?    @db.VarChar(250)
   jobId        String
 }
 
@@ -87,10 +87,10 @@ enum WorkStatus {
 model JobState {
   id          String   @id @default(uuid())
   jobId       String
-  title       String?
-  description String
-  image       String?
-  url         String?
+  title       String?  @db.VarChar(250)
+  description String   @db.VarChar(500)
+  image       String?  @db.VarChar(2048)
+  url         String?  @db.VarChar(2048)
   unitHash    String
   created     DateTime @default(now())
 }

@@ -45,7 +45,7 @@ CREATE TABLE `Work` (
     `id` VARCHAR(191) NOT NULL,
     `created` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `status` ENUM('PENDING', 'QUEUED', 'CANCELLED_ON_RESTART', 'FAILED_TO_QUEUE', 'FINISHED', 'FAILED') NOT NULL DEFAULT 'PENDING',
-    `statusReason` VARCHAR(191) NULL,
+    `statusReason` VARCHAR(250) NULL,
     `jobId` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -55,18 +55,12 @@ CREATE TABLE `Work` (
 CREATE TABLE `JobState` (
     `id` VARCHAR(191) NOT NULL,
     `jobId` VARCHAR(191) NOT NULL,
-    `title` VARCHAR(191) NULL,
-    `description` VARCHAR(191) NOT NULL,
-    `image` VARCHAR(191) NULL,
-    `url` VARCHAR(191) NULL,
+    `title` VARCHAR(250) NULL,
+    `description` VARCHAR(500) NOT NULL,
+    `image` VARCHAR(2048) NULL,
+    `url` VARCHAR(2048) NULL,
     `unitHash` VARCHAR(191) NOT NULL,
     `created` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- AddForeignKey
-ALTER TABLE `Work` ADD CONSTRAINT `Work_jobId_fkey` FOREIGN KEY (`jobId`) REFERENCES `Job`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE `JobState` ADD CONSTRAINT `JobState_jobId_fkey` FOREIGN KEY (`jobId`) REFERENCES `Job`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

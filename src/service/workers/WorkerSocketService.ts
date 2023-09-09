@@ -38,10 +38,19 @@ export class WorkerSocketService {
   }
 
   @Input("result")
-  public async handleResult(@Args(0) data: string, @Socket socket: Socket) {
+  public async handleResult(@Args(0) dataStr: string, @Socket socket: Socket) {
     try {
       this.workerManager.release(socket.id);
-      await this.resultHandler.handle(StateParser.parse(JSON.parse(data)));
+      const data = JSON.parse(dataStr);
+      try {
+        await this.resultHandler.handle(StateParser.parse(data));
+      } catch (e) {
+        if (data.id) {
+          await this.workDelegator.fail(data.id, "RESULT_HANDLE_ERROR");
+        }
+        this.workerManager.release(socket.id);
+        this.logger.warn(e);
+      }
     } catch (e) {
       this.logger.error(e);
     }
@@ -52,7 +61,7 @@ export class WorkerSocketService {
     try {
       const error = WorkErrorParser.parse(JSON.parse(data));
       if (error.id) {
-        await this.workDelegator.fail(error.id, error.message);
+        await this.workDelegator.fail(error.id, error.code);
       }
       this.workerManager.release(socket.id);
       this.logger.warn(error?.message ?? error.code);
