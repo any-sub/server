@@ -62,7 +62,7 @@
     "passport": "0.6.0",
     "socket.io": "4.7.2",
     "uuid": "9.0.0",
-    "znv": "0.3.2",
+    "znv": "0.4.0",
     "zod": "3.22.2"
   },
   "devDependencies": {
