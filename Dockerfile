@@ -14,7 +14,7 @@
 ##                                                                           ##
 ###############################################################################
 ###############################################################################
-ARG NODE_VERSION=16.13.1
+ARG NODE_VERSION=lts
 
 FROM node:${NODE_VERSION}-alpine as build
 WORKDIR /opt
@@ -33,7 +33,7 @@ FROM node:${NODE_VERSION}-alpine as runtime
 ENV WORKDIR /opt
 WORKDIR $WORKDIR
 
-RUN apk update && apk add build-base git curl ffmpeg imagemagick
+RUN apk update && apk add build-base git curl
 
 COPY --from=build /opt .
 
