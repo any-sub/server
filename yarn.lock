@@ -1801,7 +1801,15 @@
   dependencies:
     tslib "2.5.0"
 
-"@tsed/logger-file@6.6.2", "@tsed/logger-file@>=6.2.2":
+"@tsed/logger-file@6.6.3":
+  version "6.6.3"
+  resolved "https://registry.yarnpkg.com/@tsed/logger-file/-/logger-file-6.6.3.tgz#b1b2b88742930382448c338e4270edfabf4eb401"
+  integrity sha512-b0UZJcJqFmcB6XULd68qOmQJC5H30yzN308EZtZneLxl09lgk7GRteI73K3IL5T7VLFLZeXU3/h718+CbBO0Ow==
+  dependencies:
+    streamroller "^3.1.5"
+    tslib "2.3.1"
+
+"@tsed/logger-file@>=6.2.2":
   version "6.6.2"
   resolved "https://registry.npmjs.org/@tsed/logger-file/-/logger-file-6.6.2.tgz"
   integrity sha512-UCn+SXTzbI/Y4MQr28CCuXM5D0E9foU3e3Sgv76wwV2s8FLbM9PjtoTappvkvrNfZTbO1d8iKk4F5E82K4QoPQ==
@@ -1809,7 +1817,17 @@
     streamroller "^3.1.5"
     tslib "2.3.1"
 
-"@tsed/logger@6.6.2", "@tsed/logger@>=6.2.2":
+"@tsed/logger@6.6.3":
+  version "6.6.3"
+  resolved "https://registry.yarnpkg.com/@tsed/logger/-/logger-6.6.3.tgz#9c10d3ec4f21d092a96bf51de52b475939379604"
+  integrity sha512-TwJDWQ3nnZ++A6Si/pHFdCGDoewRSDdmBpN6vwnFRXRjJrkHqITwCMGMG74ZMVBXl8KMI6ngNma2qbIuhKFUyw==
+  dependencies:
+    colors "1.4.0"
+    date-format "^4.0.6"
+    semver "^7.3.5"
+    tslib "2.3.1"
+
+"@tsed/logger@>=6.2.2":
   version "6.6.2"
   resolved "https://registry.npmjs.org/@tsed/logger/-/logger-6.6.2.tgz"
   integrity sha512-gW/BhxJuxGUXLeiNVRCZcrFIz5DFwjiXFpA73hyNtS2u3Yin5Qva5wm63IDK1EPOf0FMe0FWLregay09Jwaiuw==
