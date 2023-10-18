@@ -74,7 +74,7 @@
     "@tsed/cli-plugin-passport": "4.6.4",
     "@tsed/cli-plugin-prisma": "4.6.4",
     "@tsed/socketio-testing": "7.38.0",
-    "@types/chance": "1.1.4",
+    "@types/chance": "1.1.5",
     "@types/compression": "1.7.3",
     "@types/cookie-parser": "1.4.4",
     "@types/cors": "2.8.14",
