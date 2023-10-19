@@ -2256,10 +2256,10 @@
     "@types/koa-compose" "*"
     "@types/node" "*"
 
-"@types/method-override@0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@types/method-override/-/method-override-0.0.33.tgz#eb38bf1fb24ace7893f53010f9ba8405ffe40295"
-  integrity sha512-H6hK7AZdUOCmboTTUlhfDG3uT0XDljjrk3vIb+GJ3ylkogXu5s/NncGB85r3rtCz6sxZBWF62dlf7I04sIQA5A==
+"@types/method-override@0.0.34":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/method-override/-/method-override-0.0.34.tgz#c2a0684d8697c5d88d3a8cc156097c05aa383167"
+  integrity sha512-3Ga3AZNaHASSMIWM1MxwJL47x6pB/U5ARYNgMnTNYvLDO9p5ZkgTn+Oe1AKiVxat457QN99OXh/zI+BfnrbNxA==
   dependencies:
     "@types/express" "*"
 
