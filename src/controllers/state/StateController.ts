@@ -1,19 +1,15 @@
 import { Controller, Inject } from "@tsed/di";
 import { Get, Tags } from "@tsed/schema";
-import { PathParams } from "@tsed/common";
 import { JobStatesRepository } from "../../generated/prisma";
 
-@Controller("/jobs/:jobId/state")
+@Controller("/states")
 @Tags("State")
-export class JobStateController {
+export class StateController {
   @Inject() jobStateRepo: JobStatesRepository;
 
   @Get()
-  public getJobState(@PathParams("jobId") jobId: string) {
+  public getAllStateUpdates() {
     return this.jobStateRepo.findMany({
-      where: {
-        jobId
-      },
       orderBy: {
         created: "desc"
       }

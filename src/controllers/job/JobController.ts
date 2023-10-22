@@ -5,7 +5,7 @@ import { Job } from "../../models";
 import { BodyParams, PathParams } from "@tsed/common";
 import { NotFound } from "@tsed/exceptions";
 
-@Controller("/job")
+@Controller("/jobs")
 @Tags("Job")
 export class JobController {
   @Inject() jobDelegator: JobDelegator;
