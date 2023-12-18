@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@any-sub/worker-transport": "0.0.17",
-    "@prisma/client": "5.7.0",
+    "@prisma/client": "5.7.1",
     "@tsed/agenda": "7.52.0",
     "@tsed/ajv": "7.52.0",
     "@tsed/common": "7.52.0",
@@ -97,7 +97,7 @@
     "jest": "29.7.0",
     "jest-mock-server": "0.1.0",
     "prettier": "3.1.1",
-    "prisma": "5.7.0",
+    "prisma": "5.7.1",
     "rimraf": "5.0.5",
     "supertest": "6.3.3",
     "testcontainers": "9.12.0",
