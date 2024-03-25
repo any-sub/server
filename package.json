@@ -55,7 +55,7 @@
     "cross-env": "7.0.3",
     "dotenv": "16.4.5",
     "dotenv-expand": "10.0.0",
-    "dotenv-flow": "3.3.0",
+    "dotenv-flow": "4.1.0",
     "express": "4.19.2",
     "handlebars": "4.7.8",
     "jsdom": "22.1.0",
